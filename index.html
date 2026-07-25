@@ -1,0 +1,884 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cristobal Valencia · AI Engineer</title>
+  <meta name="description" content="AI Software Engineer & Full-Stack Developer. Building the future with code.">
+  <meta property="og:title" content="Cristobal Valencia · AI Engineer">
+  <meta property="og:description" content="AI Software Engineer & Full-Stack Developer. Building the future with code.">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="/assets/og.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --paper: oklch(97% 0.003 240);
+      --paper-2: oklch(94% 0.005 240);
+      --paper-3: oklch(90% 0.006 240);
+      --ink: oklch(18% 0.012 240);
+      --ink-2: oklch(38% 0.010 240);
+      --muted: oklch(55% 0.008 240);
+      --rule: oklch(85% 0.006 240);
+      --accent: oklch(55% 0.18 250);
+      --accent-2: oklch(48% 0.14 250);
+      --focus: oklch(50% 0.22 250);
+      --accent-ink: oklch(98% 0.003 240);
+      --space-sm: 0.5rem;
+      --space-md: 1rem;
+      --space-lg: 2rem;
+      --space-xl: 4rem;
+      --space-2xl: 6rem;
+      --font-display: 'Inter Tight', sans-serif;
+      --font-body: 'Inter Tight', sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+      --radius: 6px;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --paper: oklch(12% 0.008 240);
+        --paper-2: oklch(16% 0.010 240);
+        --paper-3: oklch(20% 0.010 240);
+        --ink: oklch(92% 0.006 240);
+        --ink-2: oklch(70% 0.008 240);
+        --muted: oklch(50% 0.008 240);
+        --rule: oklch(25% 0.010 240);
+        --accent: oklch(60% 0.18 250);
+        --accent-2: oklch(50% 0.14 250);
+        --focus: oklch(65% 0.22 250);
+        --accent-ink: oklch(12% 0.008 240);
+      }
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: var(--font-body);
+      background: var(--paper);
+      color: var(--ink);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: clip;
+    }
+    ::selection { background: var(--accent); color: var(--accent-ink); }
+
+    /* ─── THREE.JS CANVAS ─── */
+    #bg-canvas {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100vw; height: 100vh;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    /* ─── LAYOUT ─── */
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 0 var(--space-lg);
+      position: relative;
+      z-index: 1;
+    }
+
+    /* ─── NAV ─── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      padding: var(--space-md) var(--space-lg);
+      background: color-mix(in oklch, var(--paper) 85%, transparent);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--rule);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    nav .logo {
+      font-family: var(--font-mono);
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: var(--ink);
+      text-decoration: none;
+    }
+    nav .logo span { color: var(--accent); }
+    nav .nav-links { display: flex; gap: var(--space-lg); list-style: none; }
+    nav .nav-links a {
+      text-decoration: none;
+      color: var(--ink-2);
+      font-size: 0.85rem;
+      font-weight: 400;
+      transition: color 0.2s;
+      position: relative;
+    }
+    nav .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: -2px; left: 0;
+      width: 0; height: 1px;
+      background: var(--accent);
+      transition: width 0.3s;
+    }
+    nav .nav-links a:hover { color: var(--ink); }
+    nav .nav-links a:hover::after { width: 100%; }
+    @media (max-width: 640px) {
+      nav .nav-links { display: none; }
+    }
+
+    /* ─── HERO ─── */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding-top: 80px;
+    }
+    .hero .tag {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      color: var(--accent);
+      margin-bottom: var(--space-md);
+      letter-spacing: 0.05em;
+    }
+    .hero h1 {
+      font-size: clamp(2.5rem, 6vw, 4.5rem);
+      font-weight: 700;
+      line-height: 1.05;
+      letter-spacing: -0.03em;
+      margin-bottom: var(--space-lg);
+    }
+    .hero h1 em {
+      font-style: normal;
+      color: var(--accent);
+    }
+    .hero p {
+      font-size: 1.05rem;
+      color: var(--ink-2);
+      max-width: 520px;
+      line-height: 1.7;
+      margin-bottom: var(--space-xl);
+    }
+    .hero .cta-row {
+      display: flex;
+      gap: var(--space-md);
+      flex-wrap: wrap;
+    }
+    .hero .cta-row a {
+      text-decoration: none;
+      padding: 0.7rem 1.5rem;
+      border-radius: var(--radius);
+      font-size: 0.9rem;
+      font-weight: 500;
+      transition: all 0.25s;
+    }
+    .hero .cta-row a.primary {
+      background: var(--accent);
+      color: var(--accent-ink);
+    }
+    .hero .cta-row a.primary:hover { background: var(--accent-2); transform: translateY(-1px); }
+    .hero .cta-row a.secondary {
+      border: 1px solid var(--rule);
+      color: var(--ink);
+    }
+    .hero .cta-row a.secondary:hover {
+      border-color: var(--ink);
+      transform: translateY(-1px);
+    }
+    .hero .scroll-hint {
+      position: absolute;
+      bottom: var(--space-xl);
+      left: 50%;
+      transform: translateX(-50%);
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      color: var(--muted);
+      animation: bob 2s ease-in-out infinite;
+    }
+    @keyframes bob {
+      0%, 100% { transform: translateX(-50%) translateY(0); }
+      50% { transform: translateX(-50%) translateY(6px); }
+    }
+
+    /* ─── SECTION ─── */
+    section { padding: var(--space-2xl) 0; }
+    .section-label {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      letter-spacing: 0.08em;
+      color: var(--accent);
+      margin-bottom: var(--space-sm);
+      text-transform: uppercase;
+    }
+    .section-title {
+      font-size: 1.8rem;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      margin-bottom: var(--space-xl);
+    }
+
+    /* ─── STATS ─── */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: var(--space-lg);
+      margin-bottom: var(--space-xl);
+    }
+    .stat-card {
+      background: var(--paper-2);
+      border-radius: var(--radius);
+      padding: var(--space-lg);
+      border: 1px solid var(--rule);
+    }
+    .stat-card .number {
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: var(--accent);
+      font-family: var(--font-mono);
+    }
+    .stat-card .label {
+      font-size: 0.8rem;
+      color: var(--muted);
+      margin-top: var(--space-sm);
+    }
+
+    /* ─── ACCORDION EXP ─── */
+    .accordion { border-top: 1px solid var(--rule); }
+    .accordion-item {
+      border-bottom: 1px solid var(--rule);
+    }
+    .accordion-header {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: var(--space-lg) 0;
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: var(--ink);
+      font-family: var(--font-body);
+      font-size: 1rem;
+      text-align: left;
+      transition: color 0.2s;
+    }
+    .accordion-header:hover { color: var(--accent); }
+    .accordion-header .title-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.15rem;
+    }
+    .accordion-header .role { font-weight: 600; }
+    .accordion-header .company { font-size: 0.85rem; color: var(--ink-2); }
+    .accordion-header .date {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      color: var(--muted);
+    }
+    .accordion-header .icon {
+      font-size: 1.2rem;
+      transition: transform 0.3s;
+      color: var(--muted);
+    }
+    .accordion-item.open .accordion-header .icon {
+      transform: rotate(45deg);
+    }
+    .accordion-body {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.4s ease, padding 0.3s ease;
+      padding: 0;
+    }
+    .accordion-item.open .accordion-body {
+      max-height: 600px;
+      padding-bottom: var(--space-lg);
+    }
+    .accordion-body ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      margin-bottom: var(--space-md);
+    }
+    .accordion-body ul li {
+      font-size: 0.9rem;
+      color: var(--ink-2);
+      padding-left: var(--space-md);
+      position: relative;
+    }
+    .accordion-body ul li::before {
+      content: '→';
+      position: absolute;
+      left: 0;
+      color: var(--accent);
+    }
+    .accordion-body .tech-stack {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      margin-top: var(--space-sm);
+    }
+    .accordion-body .tech-stack span {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      padding: 0.2rem 0.6rem;
+      background: var(--paper-3);
+      border-radius: 3px;
+      color: var(--ink-2);
+    }
+
+    /* ─── SKILLS ─── */
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: var(--space-md);
+    }
+    .skill-cat {
+      background: var(--paper-2);
+      border: 1px solid var(--rule);
+      border-radius: var(--radius);
+      padding: var(--space-lg);
+    }
+    .skill-cat h4 {
+      font-size: 0.8rem;
+      font-weight: 600;
+      margin-bottom: var(--space-sm);
+      color: var(--accent);
+      font-family: var(--font-mono);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .skill-cat .tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.35rem;
+    }
+    .skill-cat .tags span {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      padding: 0.2rem 0.5rem;
+      background: var(--paper-3);
+      border-radius: 3px;
+      color: var(--ink-2);
+    }
+
+    /* ─── CONTACT ─── */
+    .contact-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: var(--space-md);
+    }
+    .contact-card {
+      background: var(--paper-2);
+      border: 1px solid var(--rule);
+      border-radius: var(--radius);
+      padding: var(--space-lg);
+      text-decoration: none;
+      color: var(--ink);
+      transition: all 0.25s;
+      display: flex;
+      align-items: center;
+      gap: var(--space-md);
+    }
+    .contact-card:hover {
+      border-color: var(--accent);
+      transform: translateY(-2px);
+    }
+    .contact-card .emoji { font-size: 1.5rem; }
+    .contact-card .c-label { font-size: 0.8rem; color: var(--muted); }
+    .contact-card .c-value { font-size: 0.85rem; font-weight: 500; word-break: break-all; }
+
+    /* ─── FOOTER ─── */
+    footer {
+      border-top: 1px solid var(--rule);
+      padding: var(--space-xl) 0;
+      text-align: center;
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+    footer a { color: var(--ink); text-decoration: none; }
+    footer a:hover { color: var(--accent); }
+
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 640px) {
+      .container { padding: 0 var(--space-md); }
+      section { padding: var(--space-xl) 0; }
+      .hero h1 { font-size: 2.2rem; }
+      .stats-grid { grid-template-columns: repeat(2, 1fr); }
+      .skills-grid { grid-template-columns: 1fr; }
+      .contact-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- THREE.JS BACKGROUND -->
+  <canvas id="bg-canvas"></canvas>
+
+  <!-- NAV -->
+  <nav>
+    <a href="#" class="logo"><span>✦</span> cv</a>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#experience">Experience</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero" id="about">
+    <div class="container">
+      <div class="tag">AI Engineer · Full-Stack · Tech Lead</div>
+      <h1>Cristobal<br><em>Valencia</em></h1>
+      <p>
+        AI Software Engineer at Rappi. Building intelligent systems with 
+        LangGraph, FastAPI, and a deep stack across Web3 and cloud.
+        Previously leading full-stack teams and shipping blockchain solutions.
+      </p>
+      <div class="cta-row">
+        <a href="#experience" class="primary">View Experience →</a>
+        <a href="#contact" class="secondary">Get in Touch</a>
+      </div>
+    </div>
+    <div class="scroll-hint">SCROLL ↓</div>
+  </section>
+
+  <!-- STATS -->
+  <section>
+    <div class="container">
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="number">3+</div>
+          <div class="label">Years Building</div>
+        </div>
+        <div class="stat-card">
+          <div class="number">10+</div>
+          <div class="label">Projects Shipped</div>
+        </div>
+        <div class="stat-card">
+          <div class="number">7</div>
+          <div class="label">Tech Stacks</div>
+        </div>
+        <div class="stat-card">
+          <div class="number">∞</div>
+          <div class="label">Curiosity</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- EXPERIENCE -->
+  <section id="experience">
+    <div class="container">
+      <div class="section-label">02 · Experience</div>
+      <h2 class="section-title">Where I've built</h2>
+      <div class="accordion">
+
+        <div class="accordion-item open">
+          <button class="accordion-header">
+            <div class="title-group">
+              <span class="role">AI Software Engineer</span>
+              <span class="company">Rappi</span>
+            </div>
+            <span class="date">Sep 2025 — Jun 2026</span>
+            <span class="icon">+</span>
+          </button>
+          <div class="accordion-body">
+            <ul>
+              <li>Built AI-driven product features at scale within Rappi's ecosystem</li>
+              <li>Designed agentic workflows with LangGraph + FastAPI; defined MCP/tool schemas</li>
+              <li>Implemented observability pipelines (Langfuse, LangSmith) for tracing</li>
+              <li>Drove context-injection and data pipeline strategies (PostgreSQL, Redash)</li>
+              <li>Contributed to AI architecture decisions and AI-first adoption</li>
+            </ul>
+            <div class="tech-stack">
+              <span>FastAPI</span><span>LangGraph</span><span>Langfuse</span><span>PostgreSQL</span><span>Redash</span><span>Linux</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="accordion-item">
+          <button class="accordion-header">
+            <div class="title-group">
+              <span class="role">Full Stack Developer & Tech Lead</span>
+              <span class="company">Corporacion Talentum</span>
+            </div>
+            <span class="date">Oct 2024 — Jul 2025</span>
+            <span class="icon">+</span>
+          </button>
+          <div class="accordion-body">
+            <ul>
+              <li>Led full stack development of digital platforms across the full SDLC</li>
+              <li>Coordinated teams, clients, and DevOps for seamless delivery</li>
+              <li>Participated in technical decision-making and PoC validation</li>
+            </ul>
+            <div class="tech-stack">
+              <span>Next.js</span><span>NestJS</span><span>PostgreSQL</span><span>Docker</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="accordion-item">
+          <button class="accordion-header">
+            <div class="title-group">
+              <span class="role">Blockchain Engineer & Business Dev</span>
+              <span class="company">AsymmetricFrequency</span>
+            </div>
+            <span class="date">Jun 2024 — Sep 2025</span>
+            <span class="icon">+</span>
+          </button>
+          <div class="accordion-body">
+            <ul>
+              <li>Designed blockchain solutions ensuring traceability and security</li>
+              <li>Led technical teams and managed full project lifecycle</li>
+              <li>Architected smart contracts and Web3 integrations</li>
+            </ul>
+            <div class="tech-stack">
+              <span>Ethereum</span><span>Solidity</span><span>Web3</span><span>TypeScript</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="accordion-item">
+          <button class="accordion-header">
+            <div class="title-group">
+              <span class="role">Power Platform Developer</span>
+              <span class="company">CAF — Development Bank of Latin America</span>
+            </div>
+            <span class="date">May 2024 — Oct 2024</span>
+            <span class="icon">+</span>
+          </button>
+          <div class="accordion-body">
+            <ul>
+              <li>Automated cybersecurity and functional-role management processes</li>
+              <li>Built reusable dashboards and BPM-aligned workflows</li>
+            </ul>
+            <div class="tech-stack">
+              <span>C#</span><span>Power Platform</span><span>PowerApps</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="accordion-item">
+          <button class="accordion-header">
+            <div class="title-group">
+              <span class="role">Full Stack Developer</span>
+              <span class="company">Universidad Santiago de Cali</span>
+            </div>
+            <span class="date">Apr 2024 — Jul 2024</span>
+            <span class="icon">+</span>
+          </button>
+          <div class="accordion-body">
+            <ul>
+              <li>Developed SIPAC modules for administrative areas</li>
+              <li>Led stakeholder requirement sessions</li>
+            </ul>
+            <div class="tech-stack">
+              <span>Laravel</span><span>SQL Server</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="accordion-item">
+          <button class="accordion-header">
+            <div class="title-group">
+              <span class="role">Digital Transformation Contractor</span>
+              <span class="company">SENA</span>
+            </div>
+            <span class="date">Feb 2023 — Dec 2023</span>
+            <span class="icon">+</span>
+          </button>
+          <div class="accordion-body">
+            <ul>
+              <li>Implemented digital tools for administrative management</li>
+              <li>Automated document workflows</li>
+            </ul>
+            <div class="tech-stack">
+              <span>Python</span><span>Microsoft 365</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="accordion-item">
+          <button class="accordion-header">
+            <div class="title-group">
+              <span class="role">Backend Developer</span>
+              <span class="company">Dutec</span>
+            </div>
+            <span class="date">May 2022 — Oct 2022</span>
+            <span class="icon">+</span>
+          </button>
+          <div class="accordion-body">
+            <ul>
+              <li>Python backend support for internal systems</li>
+              <li>Process automation scripts</li>
+            </ul>
+            <div class="tech-stack">
+              <span>Python</span><span>Django</span><span>Autohotkey</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- SKILLS -->
+  <section id="skills">
+    <div class="container">
+      <div class="section-label">03 · Skills</div>
+      <h2 class="section-title">What I wield</h2>
+      <div class="skills-grid">
+        <div class="skill-cat">
+          <h4>AI / LLM</h4>
+          <div class="tags">
+            <span>FastAPI</span><span>LangGraph</span><span>LangChain</span>
+            <span>Langfuse</span><span>LangSmith</span><span>Prompting</span>
+          </div>
+        </div>
+        <div class="skill-cat">
+          <h4>Frontend</h4>
+          <div class="tags">
+            <span>Next.js</span><span>React</span><span>TypeScript</span>
+            <span>Angular</span><span>Tailwind</span>
+          </div>
+        </div>
+        <div class="skill-cat">
+          <h4>Backend</h4>
+          <div class="tags">
+            <span>Python</span><span>NestJS</span><span>Django</span>
+            <span>FastAPI</span><span>Node.js</span>
+          </div>
+        </div>
+        <div class="skill-cat">
+          <h4>Blockchain</h4>
+          <div class="tags">
+            <span>Solidity</span><span>Ethereum</span><span>Web3</span>
+            <span>TRON</span><span>ZKP</span>
+          </div>
+        </div>
+        <div class="skill-cat">
+          <h4>Data / Infra</h4>
+          <div class="tags">
+            <span>PostgreSQL</span><span>Docker</span><span>AWS</span>
+            <span>Linux</span><span>Redash</span>
+          </div>
+        </div>
+        <div class="skill-cat">
+          <h4>Leadership</h4>
+          <div class="tags">
+            <span>Tech Lead</span><span>IEEE Chair</span><span>Mentoring</span>
+            <span>PoC Validation</span><span>Community</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="container">
+      <div class="section-label">04 · Contact</div>
+      <h2 class="section-title">Let's connect</h2>
+      <div class="contact-grid">
+        <a href="mailto:cristobalvalencia3002@gmail.com" class="contact-card">
+          <span class="emoji">✉</span>
+          <div>
+            <div class="c-label">Email</div>
+            <div class="c-value">cristobalvalencia3002@gmail.com</div>
+          </div>
+        </a>
+        <a href="https://wa.me/573005412940" target="_blank" rel="noopener" class="contact-card">
+          <span class="emoji">📱</span>
+          <div>
+            <div class="c-label">Phone / WhatsApp</div>
+            <div class="c-value">+57 300 5412 940</div>
+          </div>
+        </a>
+        <a href="https://github.com/DevCristobalvc" target="_blank" rel="noopener" class="contact-card">
+          <span class="emoji">🐙</span>
+          <div>
+            <div class="c-label">GitHub</div>
+            <div class="c-value">@DevCristobalvc</div>
+          </div>
+        </a>
+        <a href="https://linkedin.com/in/cristobalvalenciaceron" target="_blank" rel="noopener" class="contact-card">
+          <span class="emoji">💼</span>
+          <div>
+            <div class="c-label">LinkedIn</div>
+            <div class="c-value">cristobalvalenciaceron</div>
+          </div>
+        </a>
+        <a href="https://gitlab.com/DevCristobalvc" target="_blank" rel="noopener" class="contact-card">
+          <span class="emoji">🦊</span>
+          <div>
+            <div class="c-label">GitLab</div>
+            <div class="c-value">@DevCristobalvc</div>
+          </div>
+        </a>
+        <a href="https://x.com/devcristobalvc" target="_blank" rel="noopener" class="contact-card">
+          <span class="emoji">𝕏</span>
+          <div>
+            <div class="c-label">X / Twitter</div>
+            <div class="c-value">@devcristobalvc</div>
+          </div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="container">
+      <p>© 2026 Cristobal Valencia Ceron · Built with <a href="#" style="color:var(--accent)">✦</a> from Cali, Colombia</p>
+    </div>
+  </footer>
+
+  <!-- THREE.JS -->
+  <script type="importmap">
+    {
+      "imports": {
+        "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js"
+      }
+    }
+  </script>
+  <script type="module">
+    import * as THREE from 'three';
+
+    const canvas = document.getElementById('bg-canvas');
+    const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    renderer.setSize(window.innerWidth, window.innerHeight);
+
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+    camera.position.z = 50;
+
+    const isDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    const nodeColor = isDark ? 0x4488ff : 0x2255cc;
+    const edgeColor = isDark ? 0x4488ff : 0x2255cc;
+
+    // ─── CUBE WIREFRAME ───
+    const cubeGeo = new THREE.BoxGeometry(18, 18, 18);
+    const cubeMat = new THREE.MeshBasicMaterial({
+      color: nodeColor,
+      wireframe: true,
+      transparent: true,
+      opacity: 0.08,
+    });
+    const cube = new THREE.Mesh(cubeGeo, cubeMat);
+    scene.add(cube);
+
+    // ─── NODES ───
+    const nodeCount = 120;
+    const positions = [];
+    const colors = [];
+    const nodes = [];
+
+    for (let i = 0; i < nodeCount; i++) {
+      const r = 14 + Math.random() * 8;
+      const theta = Math.random() * Math.PI * 2;
+      const phi = Math.acos(2 * Math.random() - 1);
+      const x = r * Math.sin(phi) * Math.cos(theta);
+      const y = r * Math.sin(phi) * Math.sin(theta);
+      const z = r * Math.cos(phi);
+      positions.push(x, y, z);
+
+      const c = new THREE.Color().setHSL(0.6 + Math.random() * 0.1, 0.6, isDark ? 0.5 : 0.35);
+      colors.push(c.r, c.g, c.b);
+      nodes.push(new THREE.Vector3(x, y, z));
+    }
+
+    const geo = new THREE.BufferGeometry();
+    geo.setAttribute('position', new THREE.Float32BufferAttribute(positions, 3));
+    geo.setAttribute('color', new THREE.Float32BufferAttribute(colors, 3));
+
+    const mat = new THREE.PointsMaterial({
+      size: 0.25,
+      vertexColors: true,
+      transparent: true,
+      opacity: 0.7,
+      blending: THREE.AdditiveBlending,
+    });
+    const points = new THREE.Points(geo, mat);
+    scene.add(points);
+
+    // ─── EDGES ───
+    const edgePairs = [];
+    for (let i = 0; i < nodeCount; i++) {
+      for (let j = i + 1; j < nodeCount; j++) {
+        const d = nodes[i].distanceTo(nodes[j]);
+        if (d < 6) {
+          edgePairs.push(nodes[i].x, nodes[i].y, nodes[i].z);
+          edgePairs.push(nodes[j].x, nodes[j].y, nodes[j].z);
+        }
+      }
+    }
+
+    const edgeGeo = new THREE.BufferGeometry();
+    edgeGeo.setAttribute('position', new THREE.Float32BufferAttribute(edgePairs, 3));
+    const edgeMat = new THREE.LineBasicMaterial({
+      color: edgeColor,
+      transparent: true,
+      opacity: 0.04,
+      blending: THREE.AdditiveBlending,
+    });
+    const edges = new THREE.LineSegments(edgeGeo, edgeMat);
+    scene.add(edges);
+
+    // ─── ANIMATION ───
+    let mouseX = 0, mouseY = 0;
+    document.addEventListener('mousemove', (e) => {
+      mouseX = (e.clientX / window.innerWidth) * 2 - 1;
+      mouseY = -(e.clientY / window.innerHeight) * 2 + 1;
+    });
+
+    function animate() {
+      requestAnimationFrame(animate);
+      const t = Date.now() * 0.00015;
+      cube.rotation.x = t * 0.3;
+      cube.rotation.y = t * 0.5;
+      points.rotation.x = t * 0.2;
+      points.rotation.y = t * 0.4;
+      edges.rotation.x = t * 0.2;
+      edges.rotation.y = t * 0.4;
+      cube.position.x += (mouseX * 2 - cube.position.x) * 0.01;
+      cube.position.y += (mouseY * 2 - cube.position.y) * 0.01;
+      points.position.copy(cube.position);
+      edges.position.copy(cube.position);
+      renderer.render(scene, camera);
+    }
+    animate();
+
+    window.addEventListener('resize', () => {
+      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(window.innerWidth, window.innerHeight);
+    });
+  </script>
+
+  <!-- ACCORDION -->
+  <script>
+    document.querySelectorAll('.accordion-header').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const item = btn.parentElement;
+        const isOpen = item.classList.contains('open');
+        document.querySelectorAll('.accordion-item.open').forEach(el => el.classList.remove('open'));
+        if (!isOpen) item.classList.add('open');
+      });
+    });
+  </script>
+
+  <!-- NAV SCROLL HIDE -->
+  <script>
+    let lastScroll = 0;
+    const nav = document.querySelector('nav');
+    window.addEventListener('scroll', () => {
+      const current = window.scrollY;
+      nav.style.transform = current > lastScroll && current > 100 ? 'translateY(-100%)' : 'translateY(0)';
+      lastScroll = current;
+    });
+  </script>
+</body>
+</html>
