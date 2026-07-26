@@ -376,115 +376,173 @@ footer{border-top:1px solid var(--rule);padding:2rem 0;text-align:center;font-si
   if(!container || typeof THREE === 'undefined') return;
   
   const w = container.clientWidth || 500;
-  const h = Math.min(w * 0.55, 400);
+  const h = Math.min(w * 0.6, 420);
   container.style.height = h + 'px';
   
   const scene = new THREE.Scene();
-  const camera = new THREE.PerspectiveCamera(45, w/h, 0.1, 1000);
-  camera.position.z = 22;
+  const camera = new THREE.PerspectiveCamera(40, w/h, 0.1, 1000);
+  camera.position.set(8, 3, 18);
   
   const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
   renderer.setSize(w, h);
   renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
   container.appendChild(renderer.domElement);
   
+  // Define node groups (layers like the Agent Harness diagram)
+  const layers = [
+    { label: 'Input', y: 3.5, color: 0x7a9bcb },
+    { label: 'Reason', y: 0, color: 0x6b8fc4 },
+    { label: 'Act', y: -3.5, color: 0x5a7fb8 }
+  ];
+  
   const nodes = [];
-  const nodeCount = 32;
-  const colors = [0x8a9bb0, 0x6b7f9e, 0x5a6f8a, 0x4a5f7a];
+  const connectionPairs = [];
   
-  // Create nodes
-  for(let i = 0; i < nodeCount; i++){
-    const size = 0.12 + Math.random() * 0.25;
-    const geo = new THREE.SphereGeometry(size, 8, 8);
-    const mat = new THREE.MeshBasicMaterial({ 
-      color: colors[Math.floor(Math.random() * colors.length)],
-      transparent: true,
-      opacity: 0.6 + Math.random() * 0.4
-    });
-    const mesh = new THREE.Mesh(geo, mat);
-    mesh.position.set(
-      (Math.random() - 0.5) * 18,
-      (Math.random() - 0.5) * 10,
-      (Math.random() - 0.5) * 6
-    );
-    const speed = 0.002 + Math.random() * 0.008;
-    const drift = { x: (Math.random()-0.5)*0.01, y: (Math.random()-0.5)*0.01, z: 0 };
-    scene.add(mesh);
-    nodes.push({ mesh, vx: drift.x, vy: drift.y, baseX: mesh.position.x, baseY: mesh.position.y });
-  }
-  
-  // Add a few larger "hub" nodes
-  for(let i = 0; i < 3; i++){
-    const geo = new THREE.SphereGeometry(0.3, 12, 12);
-    const mat = new THREE.MeshBasicMaterial({ color: 0x6b8fc4, transparent: true, opacity: 0.8 });
-    const mesh = new THREE.Mesh(geo, mat);
-    mesh.position.set(
-      (Math.random() - 0.5) * 12,
-      (Math.random() - 0.5) * 7,
-      (Math.random() - 0.5) * 4
-    );
-    scene.add(mesh);
-    nodes.push({ mesh, vx: 0.003, vy: 0.003, baseX: mesh.position.x, baseY: mesh.position.y });
-  }
-  
-  // Edges
-  const edgeMat = new THREE.LineBasicMaterial({ color: 0x6b8fc4, transparent: true, opacity: 0.12 });
-  const edgeGroup = new THREE.Group();
-  scene.add(edgeGroup);
-  
-  function updateEdges(){
-    while(edgeGroup.children.length) edgeGroup.remove(edgeGroup.children[0]);
+  // Create hub nodes per layer
+  layers.forEach((layer, li) => {
+    const hubGeo = new THREE.SphereGeometry(0.45, 16, 16);
+    const hubMat = new THREE.MeshBasicMaterial({ color: layer.color, transparent: true, opacity: 0.9 });
+    const hub = new THREE.Mesh(hubGeo, hubMat);
+    hub.position.set(0, layer.y, 0);
+    scene.add(hub);
+    nodes.push({ mesh: hub, layer: li, hub: true, baseX: 0, baseY: layer.y, label: layer.label });
     
-    for(let i = 0; i < nodes.length; i++){
-      for(let j = i+1; j < nodes.length; j++){
-        const a = nodes[i].mesh.position;
-        const b = nodes[j].mesh.position;
-        const dist = a.distanceTo(b);
-        if(dist < 5 && Math.random() < 0.15){
-          const points = [a.clone(), b.clone()];
-          const geo = new THREE.BufferGeometry().setFromPoints(points);
-          const line = new THREE.Line(geo, edgeMat);
-          edgeGroup.add(line);
+    // Child nodes around hub
+    const childCount = 3 + Math.floor(Math.random() * 2);
+    for(let i = 0; i < childCount; i++){
+      const angle = (i / childCount) * Math.PI * 2 + li * 0.5;
+      const radius = 2 + Math.random() * 0.8;
+      const size = 0.12 + Math.random() * 0.18;
+      const childGeo = new THREE.SphereGeometry(size, 8, 8);
+      const childMat = new THREE.MeshBasicMaterial({ 
+        color: layer.color, transparent: true, opacity: 0.5 + Math.random() * 0.4 
+      });
+      const child = new THREE.Mesh(childGeo, childMat);
+      const x = Math.cos(angle) * radius;
+      const z = Math.sin(angle) * radius * 0.6;
+      child.position.set(x, layer.y + (Math.random()-0.5)*0.5, z);
+      scene.add(child);
+      nodes.push({ mesh: child, layer: li, hub: false, baseX: x, baseY: child.position.y, baseZ: z });
+      connectionPairs.push([hub, child]);
+    }
+    
+    // Connecting children horizontally
+    const childrenInLayer = nodes.filter(n => n.layer === li && !n.hub);
+    for(let i = 0; i < childrenInLayer.length; i++){
+      for(let j = i+1; j < childrenInLayer.length; j++){
+        if(Math.random() < 0.5){
+          connectionPairs.push([childrenInLayer[i].mesh, childrenInLayer[j].mesh]);
         }
       }
     }
-  }
-  updateEdges();
+  });
   
-  // Particles
-  const particleCount = 200;
-  const partGeo = new THREE.BufferGeometry();
-  const partPos = new Float32Array(particleCount * 3);
-  for(let i = 0; i < particleCount * 3; i++){
-    partPos[i] = (Math.random() - 0.5) * 30;
+  // Inter-layer connections
+  for(let i = 0; i < layers.length - 1; i++){
+    const layerNodes = nodes.filter(n => n.layer === i && !n.hub);
+    const nextNodes = nodes.filter(n => n.layer === i+1 && !n.hub);
+    layerNodes.forEach(ln => {
+      nextNodes.forEach(nn => {
+        if(Math.random() < 0.3){
+          connectionPairs.push([ln.mesh, nn.mesh]);
+        }
+      });
+    });
+    // Always connect hubs
+    connectionPairs.push([nodes.find(n => n.hub && n.layer === i).mesh, nodes.find(n => n.hub && n.layer === i+1).mesh]);
   }
-  partGeo.setAttribute('position', new THREE.BufferAttribute(partPos, 3));
+  
+  // Create connection lines
+  const lineMat = new THREE.LineBasicMaterial({ color: 0x6b8fc4, transparent: true, opacity: 0.12 });
+  connectionPairs.forEach(([a, b]) => {
+    const points = [a.position.clone(), b.position.clone()];
+    const geo = new THREE.BufferGeometry().setFromPoints(points);
+    const line = new THREE.Line(geo, lineMat);
+    scene.add(line);
+  });
+  
+  // Glowing edge highlights (brighter lines for hub connections)
+  const highlightMat = new THREE.LineBasicMaterial({ color: 0x8aacd8, transparent: true, opacity: 0.25 });
+  layers.forEach((layer, li) => {
+    const hubPos = nodes.find(n => n.hub && n.layer === li).mesh.position;
+    layers.forEach((layer2, lj) => {
+      if(lj === li + 1){
+        const hubPos2 = nodes.find(n => n.hub && n.layer === lj).mesh.position;
+        const pts = [hubPos.clone(), hubPos2.clone()];
+        const geo = new THREE.BufferGeometry().setFromPoints(pts);
+        const line = new THREE.Line(geo, highlightMat);
+        scene.add(line);
+      }
+    });
+  });
+  
+  // Extra background particles
+  const partCount = 300;
+  const partGeo = new THREE.BufferGeometry();
+  const pos = new Float32Array(partCount * 3);
+  for(let i = 0; i < partCount * 3; i++){
+    pos[i] = (Math.random() - 0.5) * 40;
+  }
+  partGeo.setAttribute('position', new THREE.BufferAttribute(pos, 3));
   const partMat = new THREE.PointsMaterial({
-    color: 0x8a9bb0,
-    size: 0.04,
-    transparent: true,
-    opacity: 0.3
+    color: 0x8a9bb0, size: 0.03, transparent: true, opacity: 0.2
   });
   const particles = new THREE.Points(partGeo, partMat);
   scene.add(particles);
   
+  // Flowing particle stream
+  const flowCount = 50;
+  const flowGeo = new THREE.BufferGeometry();
+  const flowPos = new Float32Array(flowCount * 3);
+  const flowSpeeds = [];
+  for(let i = 0; i < flowCount; i++){
+    flowPos[i*3] = (Math.random() - 0.5) * 15;
+    flowPos[i*3+1] = 5 + Math.random() * 8;
+    flowPos[i*3+2] = (Math.random() - 0.5) * 6;
+    flowSpeeds.push(0.005 + Math.random() * 0.015);
+  }
+  flowGeo.setAttribute('position', new THREE.BufferAttribute(flowPos, 3));
+  const flowMat = new THREE.PointsMaterial({
+    color: 0x7a9bcb, size: 0.06, transparent: true, opacity: 0.35
+  });
+  const flowParticles = new THREE.Points(flowGeo, flowMat);
+  scene.add(flowParticles);
+  
   let time = 0;
   function animate(){
     requestAnimationFrame(animate);
-    time += 0.005;
+    time += 0.008;
     
-    // Float nodes
+    // Float nodes gently
     nodes.forEach((n, i) => {
-      n.mesh.position.x = n.baseX + Math.sin(time * 2 + i) * 0.3;
-      n.mesh.position.y = n.baseY + Math.cos(time * 1.7 + i * 0.5) * 0.3;
+      const offset = n.hub ? 0.1 : 0.2;
+      n.mesh.position.x = n.baseX + Math.sin(time * 1.5 + i * 0.7) * offset;
+      n.mesh.position.y = n.baseY + Math.cos(time * 1.2 + i * 0.5) * offset * 0.5;
+      if(n.baseZ !== undefined){
+        n.mesh.position.z = n.baseZ + Math.sin(time * 1.8 + i * 0.3) * offset * 0.5;
+      }
     });
     
-    // Rotate particles
-    particles.rotation.y = time * 0.03;
+    // Rotate flow particles downward (top to bottom)
+    const flowPosAttr = flowGeo.attributes.position;
+    const fp = flowPosAttr.array;
+    for(let i = 0; i < flowCount; i++){
+      fp[i*3+1] -= flowSpeeds[i];
+      if(fp[i*3+1] < -5){
+        fp[i*3+1] = 5 + Math.random() * 2;
+        fp[i*3] = (Math.random() - 0.5) * 15;
+        fp[i*3+2] = (Math.random() - 0.5) * 6;
+      }
+    }
+    flowPosAttr.needsUpdate = true;
     
-    // Camera orbit
-    camera.position.x = Math.sin(time * 0.15) * 4;
-    camera.position.z = 20 + Math.sin(time * 0.1) * 1;
+    // Slow rotation
+    particles.rotation.y = time * 0.02;
+    flowParticles.rotation.y = time * 0.01;
+    
+    // Gentle camera sway
+    camera.position.x = 6 + Math.sin(time * 0.08) * 1.5;
+    camera.position.y = 1 + Math.sin(time * 0.05) * 0.5;
     camera.lookAt(0, 0, 0);
     
     renderer.render(scene, camera);
@@ -494,7 +552,7 @@ footer{border-top:1px solid var(--rule);padding:2rem 0;text-align:center;font-si
   // Resize
   window.addEventListener('resize', () => {
     const nw = container.clientWidth || 500;
-    const nh = Math.min(nw * 0.55, 400);
+    const nh = Math.min(nw * 0.6, 420);
     container.style.height = nh + 'px';
     camera.aspect = nw / nh;
     camera.updateProjectionMatrix();
