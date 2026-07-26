@@ -48,6 +48,7 @@ nav .handle span{color:var(--accent)}
 .hero h1{font-size:clamp(2.5rem,5vw,4rem);font-weight:300;line-height:1.02;letter-spacing:-0.03em;font-family:var(--font-display);min-height:1.3em}
 .hero h1 strong{font-weight:700;color:var(--accent)}
 .hero .terminal-cursor{display:inline-block;width:2px;height:1em;background:var(--accent);margin-left:2px;animation:blink .7s infinite;vertical-align:text-bottom}
+.hero .prompt{font-family:var(--font-mono);font-size:0.5rem;color:var(--accent);letter-spacing:0.05em;opacity:0.5;display:block;margin-bottom:0.15rem}
 @keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
 .hero .subhead{font-size:clamp(0.85rem,1.3vw,0.95rem);color:var(--ink-2);max-width:480px;line-height:1.7;margin-bottom:0;font-weight:300}
 .hero .cta-row{display:flex;gap:0.5rem;flex-wrap:wrap}
@@ -59,7 +60,8 @@ nav .handle span{color:var(--accent)}
 .hero-avatar img{width:60px;height:60px;border-radius:50%;object-fit:cover;border:1px solid var(--rule);filter:grayscale(0.15);flex-shrink:0}
 .hero .avatar-handle{font-family:var(--font-mono);font-size:0.55rem;color:var(--ink-3);letter-spacing:0.08em}
 .hero .avatar-handle span{color:var(--accent)}
-@media(max-width:768px){.hero{min-height:auto;padding:5rem 0 2rem}.hero-inner{flex-direction:column;gap:2rem}.hero-left{align-items:center;text-align:center}.hero .subhead{max-width:none}.hero .cta-row{justify-content:center}.hero-right{width:100%;height:250px}}
+@media(max-width:768px){.hero{min-height:auto;padding:5rem 0 2rem}.hero-inner{flex-direction:column;gap:1.5rem}.hero-left{align-items:flex-start;text-align:left;width:100%}.hero .subhead{max-width:none;font-size:0.85rem}.hero .cta-row{justify-content:flex-start}.hero-right{width:100%;height:280px;margin-top:0}.hero h1{font-size:clamp(1.8rem,8vw,2.5rem)}.hero-avatar img{width:45px;height:45px}}
+@media(max-width:480px){.hero-right{height:200px}.hero .subhead{font-size:0.8rem}.hero h1{font-size:1.6rem}}
 
 .tech-strip{border-top:1px solid var(--rule);border-bottom:1px solid var(--rule);overflow:hidden;padding:0.6rem 0}
 .tech-track{display:flex;gap:1.5rem;animation:scroll 25s linear infinite;width:max-content;padding:0 1rem}
@@ -132,7 +134,7 @@ footer{border-top:1px solid var(--rule);padding:2rem 0;text-align:center;font-si
       </div>
       <div class="tag lang-en">AI Engineer · Full-Stack</div>
       <div class="tag lang-es">Ing. IA · Full-Stack</div>
-      <h1 id="terminal-name"><span class="lang-en">Cristobal <strong>Valencia</strong></span><span class="lang-es">Cristobal <strong>Valencia</strong></span><span class="terminal-cursor"></span></h1>
+      <h1><span class="prompt">$ ./whoami</span><span id="terminal-name"><span class="lang-en">Cristobal <strong>Valencia</strong></span><span class="lang-es">Cristobal <strong>Valencia</strong></span><span class="terminal-cursor"></span></span></h1>
       <p class="subhead lang-en">Building agentic systems at Rappi with LangGraph, FastAPI and a focus on data infrastructure.</p>
       <p class="subhead lang-es">Construyendo sistemas agénticos en Rappi con LangGraph, FastAPI e infraestructura de datos.</p>
       <div class="cta-row">
