@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Cristobal Valencia</title>
-<meta name="description" content="AI Engineer building at Rappi. LangGraph, FastAPI, Web3.">
+<meta name="description" content="AI Engineer building at Rappi. LangGraph, FastAPI.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,300;1,9..144,400&family=JetBrains+Mono:wght@400;500;600&family=Inter+Tight:wght@300;400;500;600&display=swap" rel="stylesheet">
@@ -12,13 +12,13 @@
 <style>
 :root {
   --paper: oklch(99% 0 0);
-  --paper-2: oklch(95% 0.002 240);
+  --paper-2: oklch(95% 0.003 220);
   --ink: oklch(12% 0 0);
-  --ink-2: oklch(32% 0.002 240);
-  --ink-3: oklch(48% 0.002 240);
-  --rule: oklch(88% 0.002 240);
-  --accent: oklch(48% 0.14 250);
-  --accent-2: oklch(40% 0.10 250);
+  --ink-2: oklch(32% 0.003 220);
+  --ink-3: oklch(50% 0.003 220);
+  --rule: oklch(88% 0.003 220);
+  --accent: oklch(42% 0.10 225);
+  --accent-2: oklch(36% 0.08 225);
   --font-display: 'Fraunces', Georgia, serif;
   --font-body: 'Inter Tight', system-ui, sans-serif;
   --font-mono: 'JetBrains Mono', monospace;
@@ -30,33 +30,34 @@ html{scroll-behavior:smooth}
 body{font-family:var(--font-body);background:var(--paper);color:var(--ink);line-height:1.65;-webkit-font-smoothing:antialiased}
 ::selection{background:var(--accent);color:var(--paper)}
 
-.lang-toggle{position:fixed;top:0.75rem;right:1.25rem;z-index:200;display:flex;gap:0}
+.lang-toggle{position:fixed;top:0.75rem;right:1.25rem;z-index:300;display:flex;gap:0}
 .lang-toggle button{background:none;border:none;padding:0.3rem 0.6rem;cursor:pointer;color:var(--ink-3);font-family:var(--font-mono);font-size:0.5rem;letter-spacing:0.08em;text-transform:uppercase;transition:all 0.2s}
 .lang-toggle button.active{color:var(--ink)}
 
-nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:0.75rem 1.25rem;background:var(--paper);border-bottom:1px solid var(--rule);display:flex;justify-content:space-between;align-items:center;transition:transform 0.3s}
-nav .logo{font-family:var(--font-display);font-size:0.95rem;font-weight:600;text-decoration:none;color:var(--ink);letter-spacing:-0.02em}
-nav .logo span{color:var(--accent)}
+nav{position:fixed;top:0;left:0;right:0;z-index:200;padding:0.75rem 1.25rem;background:var(--paper);border-bottom:1px solid var(--rule);display:flex;justify-content:space-between;align-items:center;transition:transform 0.3s}
+nav .handle{font-family:var(--font-mono);font-size:0.65rem;color:var(--ink-3);text-decoration:none;letter-spacing:0.02em}
+nav .handle span{color:var(--accent)}
 nav .nav-links{display:flex;gap:0.75rem;list-style:none}
 nav .nav-links a{text-decoration:none;color:var(--ink-3);font-size:0.6rem;transition:color 0.2s;text-transform:uppercase;letter-spacing:0.08em}
 nav .nav-links a:hover{color:var(--ink)}
 nav .nav-links .sep{color:var(--rule);font-size:0.6rem}
 
 .hero{min-height:90vh;display:flex;align-items:center;padding-top:4rem}
-.hero-inner{max-width:900px;margin:0 auto;padding:0 1.25rem;width:100%;position:relative;z-index:1}
+.hero-inner{max-width:900px;margin:0 auto;padding:0 1.25rem;width:100%;position:relative;z-index:1;display:flex;align-items:center;gap:2.5rem}
+.hero-text{flex:1}
 .hero .tag{font-family:var(--font-mono);font-size:0.55rem;color:var(--ink-3);letter-spacing:0.12em;text-transform:uppercase;margin-bottom:1rem}
-.hero h1{font-size:clamp(2.8rem,7vw,5rem);font-weight:300;line-height:1.02;letter-spacing:-0.03em;margin-bottom:0.75rem;font-family:var(--font-display)}
+.hero h1{font-size:clamp(2.5rem,6vw,4.5rem);font-weight:300;line-height:1.02;letter-spacing:-0.03em;margin-bottom:0.75rem;font-family:var(--font-display)}
 .hero h1 strong{font-weight:700;color:var(--accent)}
-.hero .subhead{font-size:clamp(0.9rem,1.4vw,1rem);color:var(--ink-2);max-width:500px;line-height:1.7;margin-bottom:1.5rem;font-weight:300}
+.hero .subhead{font-size:clamp(0.85rem,1.3vw,0.95rem);color:var(--ink-2);max-width:480px;line-height:1.7;margin-bottom:1.5rem;font-weight:300}
 .hero .cta-row{display:flex;gap:0.5rem;flex-wrap:wrap}
 .hero .cta-row a{text-decoration:none;padding:0.4rem 0.9rem;border:1px solid var(--rule);font-size:0.6rem;color:var(--ink-2);transition:all 0.2s;text-transform:uppercase;letter-spacing:0.06em;font-family:var(--font-mono)}
 .hero .cta-row a:hover{border-color:var(--ink);color:var(--ink)}
 .hero .cta-row a.primary{background:var(--ink);color:var(--paper);border-color:var(--ink)}
 .hero .cta-row a.primary:hover{background:var(--accent);border-color:var(--accent)}
+.hero-avatar{flex-shrink:0}
+.hero-avatar img{width:130px;height:130px;border-radius:50%;object-fit:cover;border:1px solid var(--rule);filter:grayscale(0.15)}
+@media(max-width:640px){.hero{min-height:auto;padding:5rem 0 2rem}.hero-inner{flex-direction:column-reverse;text-align:center}.hero .subhead{max-width:none}.hero .cta-row{justify-content:center}.hero-avatar img{width:90px;height:90px}}
 
-@media(max-width:640px){.hero{min-height:auto;padding:5rem 0 2rem}.hero h1{font-size:2rem}}
-
-/* ── TECH STRIP ── */
 .tech-strip{border-top:1px solid var(--rule);border-bottom:1px solid var(--rule);overflow:hidden;padding:0.6rem 0}
 .tech-track{display:flex;gap:1.5rem;animation:scroll 25s linear infinite;width:max-content;padding:0 1rem}
 .tech-track:hover{animation-play-state:paused}
@@ -66,19 +67,16 @@ nav .nav-links .sep{color:var(--rule);font-size:0.6rem}
 .tech-item i{font-size:1rem}
 .tech-item span{font-family:var(--font-mono);font-size:0.5rem;color:var(--ink-3);text-transform:uppercase;letter-spacing:0.05em}
 
-/* ── SECTIONS ── */
 .container{max-width:680px;margin:0 auto;padding:0 1.25rem}
 section{padding:4rem 0}
 .section-label{font-family:var(--font-mono);font-size:0.5rem;letter-spacing:0.15em;color:var(--ink-3);margin-bottom:0.15rem;text-transform:uppercase}
 .section-title{font-size:1.1rem;font-weight:400;margin-bottom:2rem;font-family:var(--font-display);font-style:italic;color:var(--ink-2)}
 
-/* ── STATS ── */
 .stats{display:flex;gap:2.5rem;margin-bottom:2rem}
 .stat-item .num{font-size:1.3rem;font-weight:600;color:var(--ink);font-family:var(--font-mono)}
 .stat-item .lbl{font-size:0.55rem;color:var(--ink-3);font-family:var(--font-mono);text-transform:uppercase;letter-spacing:0.06em;margin-top:0.1rem}
 @media(max-width:640px){.stats{gap:1.5rem;flex-wrap:wrap}}
 
-/* ── ACCORDION ── */
 .exp-item{padding:1rem 0;border-bottom:1px solid var(--rule)}
 .exp-header{width:100%;display:flex;justify-content:space-between;align-items:flex-start;background:none;border:none;cursor:pointer;color:var(--ink);font-family:var(--font-body);font-size:0.85rem;text-align:left;transition:color 0.2s;gap:0.75rem;padding:0}
 .exp-header:hover .role{color:var(--accent)}
@@ -97,14 +95,12 @@ section{padding:4rem 0}
 
 hr{border:none;border-top:1px solid var(--rule);margin:2rem 0}
 
-/* ── SKILLS ── */
 .skills{display:flex;gap:1.5rem;flex-wrap:wrap}
 .skill-cat{flex:1;min-width:150px}
 .skill-cat h4{font-size:0.55rem;font-weight:600;margin-bottom:0.5rem;color:var(--ink);font-family:var(--font-mono);text-transform:uppercase;letter-spacing:0.08em}
 .skill-cat .tags{display:flex;flex-wrap:wrap;gap:0.2rem}
 .skill-cat .tags span{font-family:var(--font-mono);font-size:0.5rem;padding:0.1rem 0.3rem;border:1px solid var(--rule);color:var(--ink-2)}
 
-/* ── CONTACT ── */
 .contact{display:flex;gap:0.5rem;flex-wrap:wrap}
 .contact a{text-decoration:none;color:var(--ink-2);border:1px solid var(--rule);padding:0.4rem 0.75rem;font-size:0.65rem;transition:all 0.2s;font-family:var(--font-mono);display:flex;align-items:center;gap:0.35rem}
 .contact a:hover{border-color:var(--ink);color:var(--ink)}
@@ -120,7 +116,7 @@ footer{border-top:1px solid var(--rule);padding:2rem 0;text-align:center;font-si
 </div>
 
 <nav>
-  <a href="#" class="logo"><span>✦</span> CV</a>
+  <a href="#" class="handle"><span>@</span>devcristobalvc</a>
   <ul class="nav-links">
     <li><a href="#exp"><span class="lang-en">Experience</span><span class="lang-es">Exp.</span></a></li>
     <li class="sep">/</li>
@@ -132,15 +128,20 @@ footer{border-top:1px solid var(--rule);padding:2rem 0;text-align:center;font-si
 
 <div class="hero">
   <div class="hero-inner">
-    <div class="tag lang-en">AI Engineer · Full-Stack · Cali, Colombia</div>
-    <div class="tag lang-es">Ing. IA · Full-Stack · Cali, Colombia</div>
-    <h1>Cristobal<br><strong>Valencia</strong></h1>
-    <p class="subhead lang-en">Building agentic systems at Rappi with LangGraph, FastAPI, and Web3. Previously Tech Lead at Corp. Talentum.</p>
-    <p class="subhead lang-es">Construyendo sistemas agénticos en Rappi con LangGraph, FastAPI y Web3. Anteriormente Tech Lead en Corp. Talentum.</p>
-    <div class="cta-row">
-      <a href="#exp" class="primary"><span class="lang-en">View work</span><span class="lang-es">Trabajo</span></a>
-      <a href="https://github.com/DevCristobalvc" target="_blank" rel="noopener">GitHub</a>
-      <a href="mailto:cristobalvalencia3002@gmail.com">Email</a>
+    <div class="hero-text">
+      <div class="tag lang-en">AI Engineer · Full-Stack · @devcristobalvc</div>
+      <div class="tag lang-es">Ing. IA · Full-Stack · @devcristobalvc</div>
+      <h1>Cristobal<br><strong>Valencia</strong></h1>
+      <p class="subhead lang-en">Building agentic systems at Rappi with LangGraph, FastAPI and a focus on data infrastructure.</p>
+      <p class="subhead lang-es">Construyendo sistemas agénticos en Rappi con LangGraph, FastAPI e infraestructura de datos.</p>
+      <div class="cta-row">
+        <a href="#exp" class="primary"><span class="lang-en">Experience</span><span class="lang-es">Experiencia</span></a>
+        <a href="https://github.com/DevCristobalvc" target="_blank" rel="noopener">GitHub</a>
+        <a href="mailto:cristobalvalencia3002@gmail.com">Email</a>
+      </div>
+    </div>
+    <div class="hero-avatar">
+      <img src="https://avatars.githubusercontent.com/u/101788820?v=4" alt="Cristobal Valencia">
     </div>
   </div>
 </div>
@@ -149,35 +150,31 @@ footer{border-top:1px solid var(--rule);padding:2rem 0;text-align:center;font-si
   <div class="tech-track">
     <div class="tech-item"><i class="devicon-python-plain"></i><span>Python</span></div>
     <div class="tech-item"><i class="devicon-fastapi-plain"></i><span>FastAPI</span></div>
-    <div class="tech-item"><i class="devicon-react-original"></i><span>React</span></div>
     <div class="tech-item"><i class="devicon-nextjs-original"></i><span>Next.js</span></div>
-    <div class="tech-item"><i class="devicon-typescript-plain"></i><span>TypeScript</span></div>
     <div class="tech-item"><i class="devicon-postgresql-plain"></i><span>PostgreSQL</span></div>
     <div class="tech-item"><i class="devicon-docker-plain"></i><span>Docker</span></div>
     <div class="tech-item"><i class="devicon-amazonwebservices-plain-wordmark"></i><span>AWS</span></div>
+    <div class="tech-item"><i class="devicon-linux-plain"></i><span>Linux</span></div>
     <div class="tech-item"><i class="devicon-solidity-plain"></i><span>Solidity</span></div>
     <div class="tech-item"><i class="devicon-nodejs-plain"></i><span>Node.js</span></div>
-    <div class="tech-item"><i class="devicon-nestjs-plain"></i><span>NestJS</span></div>
-    <div class="tech-item"><i class="devicon-linux-plain"></i><span>Linux</span></div>
     <div class="tech-item"><i class="devicon-laravel-plain"></i><span>Laravel</span></div>
-    <div class="tech-item"><i class="devicon-angularjs-plain"></i><span>Angular</span></div>
+    <div class="tech-item"><i class="devicon-nestjs-plain"></i><span>NestJS</span></div>
     <div class="tech-item"><i class="devicon-django-plain"></i><span>Django</span></div>
+    <div class="tech-item"><i class="devicon-typescript-plain"></i><span>TypeScript</span></div>
     <div class="tech-item"><i class="devicon-github-original"></i><span>Git</span></div>
     <div class="tech-item"><i class="devicon-python-plain"></i><span>Python</span></div>
     <div class="tech-item"><i class="devicon-fastapi-plain"></i><span>FastAPI</span></div>
-    <div class="tech-item"><i class="devicon-react-original"></i><span>React</span></div>
     <div class="tech-item"><i class="devicon-nextjs-original"></i><span>Next.js</span></div>
-    <div class="tech-item"><i class="devicon-typescript-plain"></i><span>TypeScript</span></div>
     <div class="tech-item"><i class="devicon-postgresql-plain"></i><span>PostgreSQL</span></div>
     <div class="tech-item"><i class="devicon-docker-plain"></i><span>Docker</span></div>
     <div class="tech-item"><i class="devicon-amazonwebservices-plain-wordmark"></i><span>AWS</span></div>
+    <div class="tech-item"><i class="devicon-linux-plain"></i><span>Linux</span></div>
     <div class="tech-item"><i class="devicon-solidity-plain"></i><span>Solidity</span></div>
     <div class="tech-item"><i class="devicon-nodejs-plain"></i><span>Node.js</span></div>
-    <div class="tech-item"><i class="devicon-nestjs-plain"></i><span>NestJS</span></div>
-    <div class="tech-item"><i class="devicon-linux-plain"></i><span>Linux</span></div>
     <div class="tech-item"><i class="devicon-laravel-plain"></i><span>Laravel</span></div>
-    <div class="tech-item"><i class="devicon-angularjs-plain"></i><span>Angular</span></div>
+    <div class="tech-item"><i class="devicon-nestjs-plain"></i><span>NestJS</span></div>
     <div class="tech-item"><i class="devicon-django-plain"></i><span>Django</span></div>
+    <div class="tech-item"><i class="devicon-typescript-plain"></i><span>TypeScript</span></div>
     <div class="tech-item"><i class="devicon-github-original"></i><span>Git</span></div>
   </div>
 </div>
@@ -187,13 +184,13 @@ footer{border-top:1px solid var(--rule);padding:2rem 0;text-align:center;font-si
     <div class="stats">
       <div class="stat-item"><div class="num">3+</div><div class="lbl lang-en">Years</div><div class="lbl lang-es">Años</div></div>
       <div class="stat-item"><div class="num">10+</div><div class="lbl lang-en">Projects</div><div class="lbl lang-es">Proyectos</div></div>
-      <div class="stat-item"><div class="num">6</div><div class="lbl lang-en">Stacks</div><div class="lbl lang-es">Stacks</div></div>
+      <div class="stat-item"><div class="num">7</div><div class="lbl lang-en">Lang&nbsp;Graphs</div><div class="lbl lang-es">Lang&nbsp;Graphs</div></div>
       <div class="stat-item"><div class="num">∞</div><div class="lbl lang-en">Curiosity</div><div class="lbl lang-es">Curiosidad</div></div>
     </div>
   </div>
 </section>
 
-<hr style="margin:0;border:none;border-top:1px solid var(--rule)">
+<hr style="margin:0">
 
 <section id="exp">
   <div class="container">
@@ -203,52 +200,32 @@ footer{border-top:1px solid var(--rule);padding:2rem 0;text-align:center;font-si
 
     <div class="exp-item open">
       <button class="exp-header">
-        <div class="title-group">
-          <div class="role">AI Software Engineer</div>
-          <div class="company">Rappi</div>
-        </div>
-        <div class="meta">
-          <span class="date">2025–2026</span>
-          <span class="toggle">+</span>
-        </div>
+        <div class="title-group"><div class="role">AI Software Engineer</div><div class="company">Rappi</div></div>
+        <div class="meta"><span class="date">2025–2026</span><span class="toggle">+</span></div>
       </button>
       <div class="exp-body">
-        <p class="lang-en">Built AI-driven features at scale. Designed agentic workflows with LangGraph and FastAPI, defined MCP tool schemas for LLM systems, and built observability pipelines (Langfuse, LangSmith). Drove data strategies with PostgreSQL and Redash.</p>
-        <p class="lang-es">Construí features de IA a escala. Diseñé flujos agénticos con LangGraph y FastAPI, esquemas MCP para sistemas LLM, y pipelines de observabilidad (Langfuse, LangSmith). Estrategias de datos con PostgreSQL y Redash.</p>
+        <p class="lang-en">Built AI-driven features at scale. Designed agentic workflows with LangGraph and FastAPI, defined MCP tool schemas, and built observability pipelines with Langfuse and LangSmith. Drove data strategies with PostgreSQL and Redash.</p>
+        <p class="lang-es">Construí features de IA a escala. Diseñé flujos agénticos con LangGraph y FastAPI, esquemas MCP, y pipelines de observabilidad con Langfuse y LangSmith.</p>
         <div class="tags"><span>FastAPI</span><span>LangGraph</span><span>Langfuse</span><span>PostgreSQL</span><span>Redash</span></div>
       </div>
     </div>
 
     <div class="exp-item">
       <button class="exp-header">
-        <div class="title-group">
-          <div class="role lang-en">Full Stack Dev &amp; Tech Lead</div>
-          <div class="role lang-es">Full Stack &amp; Tech Lead</div>
-          <div class="company">Corp. Talentum</div>
-        </div>
-        <div class="meta">
-          <span class="date">2024–2025</span>
-          <span class="toggle">+</span>
-        </div>
+        <div class="title-group"><div class="role lang-en">Full Stack Dev &amp; Tech Lead</div><div class="role lang-es">Full Stack &amp; Tech Lead</div><div class="company">Corp. Talentum</div></div>
+        <div class="meta"><span class="date">2024–2025</span><span class="toggle">+</span></div>
       </button>
       <div class="exp-body">
-        <p class="lang-en">Led full stack development of digital platforms across the full SDLC. Coordinated cross-functional teams, clients, and DevOps for seamless delivery.</p>
-        <p class="lang-es">Lideré desarrollo full stack de plataformas digitales. Coordiné equipos multifuncionales, clientes y DevOps.</p>
+        <p class="lang-en">Led full stack development of digital platforms. Coordinated cross-functional teams, clients, and DevOps.</p>
+        <p class="lang-es">Lideré desarrollo full stack de plataformas digitales. Coordiné equipos, clientes y DevOps.</p>
         <div class="tags"><span>Next.js</span><span>NestJS</span><span>PostgreSQL</span><span>Docker</span></div>
       </div>
     </div>
 
     <div class="exp-item">
       <button class="exp-header">
-        <div class="title-group">
-          <div class="role lang-en">Blockchain Engineer &amp; BD</div>
-          <div class="role lang-es">Blockchain Engineer &amp; BD</div>
-          <div class="company">AsymmetricFrequency</div>
-        </div>
-        <div class="meta">
-          <span class="date">2024–2025</span>
-          <span class="toggle">+</span>
-        </div>
+        <div class="title-group"><div class="role lang-en">Blockchain Engineer &amp; BD</div><div class="role lang-es">Blockchain Engineer &amp; BD</div><div class="company">AsymmetricFrequency</div></div>
+        <div class="meta"><span class="date">2024–2025</span><span class="toggle">+</span></div>
       </button>
       <div class="exp-body">
         <p class="lang-en">Designed blockchain solutions for traceability and security. Led technical teams across full project lifecycle.</p>
@@ -259,18 +236,11 @@ footer{border-top:1px solid var(--rule);padding:2rem 0;text-align:center;font-si
 
     <div class="exp-item">
       <button class="exp-header">
-        <div class="title-group">
-          <div class="role lang-en">Power Platform Developer</div>
-          <div class="role lang-es">Desarrollador Power Platform</div>
-          <div class="company">CAF — Development Bank</div>
-        </div>
-        <div class="meta">
-          <span class="date">2024</span>
-          <span class="toggle">+</span>
-        </div>
+        <div class="title-group"><div class="role lang-en">Power Platform Developer</div><div class="role lang-es">Desarrollador Power Platform</div><div class="company">CAF — Development Bank</div></div>
+        <div class="meta"><span class="date">2024</span><span class="toggle">+</span></div>
       </button>
       <div class="exp-body">
-        <p class="lang-en">Automated cybersecurity and role management processes. Built dashboards and BPM-aligned workflows.</p>
+        <p class="lang-en">Automated cybersecurity and role management. Built dashboards and BPM-aligned workflows.</p>
         <p class="lang-es">Automaticé procesos de ciberseguridad y gestión de roles.</p>
         <div class="tags"><span>C#</span><span>Power Platform</span></div>
       </div>
@@ -278,18 +248,11 @@ footer{border-top:1px solid var(--rule);padding:2rem 0;text-align:center;font-si
 
     <div class="exp-item">
       <button class="exp-header">
-        <div class="title-group">
-          <div class="role lang-en">Full Stack Developer</div>
-          <div class="role lang-es">Desarrollador Full Stack</div>
-          <div class="company">Univ. Santiago de Cali</div>
-        </div>
-        <div class="meta">
-          <span class="date">2024</span>
-          <span class="toggle">+</span>
-        </div>
+        <div class="title-group"><div class="role lang-en">Full Stack Developer</div><div class="role lang-es">Desarrollador Full Stack</div><div class="company">Univ. Santiago de Cali</div></div>
+        <div class="meta"><span class="date">2024</span><span class="toggle">+</span></div>
       </button>
       <div class="exp-body">
-        <p class="lang-en">Developed SIPAC modules for administrative areas. Led stakeholder requirement sessions.</p>
+        <p class="lang-en">Developed SIPAC modules for administrative areas.</p>
         <p class="lang-es">Desarrollé módulos SIPAC para áreas administrativas.</p>
         <div class="tags"><span>Laravel</span><span>SQL Server</span></div>
       </div>
@@ -297,18 +260,11 @@ footer{border-top:1px solid var(--rule);padding:2rem 0;text-align:center;font-si
 
     <div class="exp-item">
       <button class="exp-header">
-        <div class="title-group">
-          <div class="role lang-en">Digital Transformation</div>
-          <div class="role lang-es">Transformación Digital</div>
-          <div class="company">SENA</div>
-        </div>
-        <div class="meta">
-          <span class="date">2023</span>
-          <span class="toggle">+</span>
-        </div>
+        <div class="title-group"><div class="role lang-en">Digital Transformation</div><div class="role lang-es">Transformación Digital</div><div class="company">SENA</div></div>
+        <div class="meta"><span class="date">2023</span><span class="toggle">+</span></div>
       </button>
       <div class="exp-body">
-        <p class="lang-en">Digital tools for administrative management. Automated document workflows with Python and Microsoft 365.</p>
+        <p class="lang-en">Digital tools for administrative management with Python and Microsoft 365.</p>
         <p class="lang-es">Herramientas digitales para gestión administrativa con Python y M365.</p>
         <div class="tags"><span>Python</span><span>M365</span></div>
       </div>
@@ -324,11 +280,11 @@ footer{border-top:1px solid var(--rule);padding:2rem 0;text-align:center;font-si
     <h2 class="section-title lang-en">Skills</h2>
     <h2 class="section-title lang-es">Habilidades</h2>
     <div class="skills">
-      <div class="skill-cat"><h4>AI/LLM</h4><div class="tags"><span>FastAPI</span><span>LangGraph</span><span>LangChain</span><span>Langfuse</span><span>Prompting</span></div></div>
-      <div class="skill-cat"><h4>Frontend</h4><div class="tags"><span>Next.js</span><span>React</span><span>TypeScript</span><span>Angular</span><span>Tailwind</span></div></div>
+      <div class="skill-cat"><h4>AI/LLM</h4><div class="tags"><span>FastAPI</span><span>LangGraph</span><span>LangChain</span><span>Langfuse</span><span>MCP</span></div></div>
       <div class="skill-cat"><h4>Backend</h4><div class="tags"><span>Python</span><span>NestJS</span><span>Django</span><span>Node.js</span><span>Laravel</span></div></div>
-      <div class="skill-cat"><h4>Blockchain</h4><div class="tags"><span>Solidity</span><span>Ethereum</span><span>Web3</span><span>TRON</span><span>ZKP</span></div></div>
-      <div class="skill-cat"><h4>Infra</h4><div class="tags"><span>PostgreSQL</span><span>Docker</span><span>AWS</span><span>Linux</span><span>Redash</span></div></div>
+      <div class="skill-cat"><h4>Frontend</h4><div class="tags"><span>Next.js</span><span>TypeScript</span></div></div>
+      <div class="skill-cat"><h4>Blockchain</h4><div class="tags"><span>Solidity</span><span>Ethereum</span><span>Web3</span><span>TRON</span></div></div>
+      <div class="skill-cat"><h4>Data/Infra</h4><div class="tags"><span>PostgreSQL</span><span>Docker</span><span>AWS</span><span>Linux</span><span>Redash</span></div></div>
       <div class="skill-cat"><h4 lang="en">Leadership</h4><h4 lang="es">Liderazgo</h4><div class="tags"><span>Tech Lead</span><span>IEEE Chair</span><span lang="en">Mentoring</span><span lang="es">Mentoría</span><span>PoC</span></div></div>
     </div>
   </div>
@@ -352,7 +308,7 @@ footer{border-top:1px solid var(--rule);padding:2rem 0;text-align:center;font-si
 </section>
 
 <footer>
-  <p>© 2026 Cristobal Valencia · <span class="lang-en">Cali, Colombia</span><span class="lang-es">Cali, Colombia</span></p>
+  <p>© 2026 · Cristobal Valencia · <span class="lang-en">Cali, Colombia</span><span class="lang-es">Cali, Colombia</span></p>
 </footer>
 
 <script>
