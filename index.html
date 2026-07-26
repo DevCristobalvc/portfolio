@@ -9,6 +9,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,300;1,9..144,400&family=JetBrains+Mono:wght@400;500;600&family=Inter+Tight:wght@300;400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <style>
 :root {
   --paper: oklch(99% 0 0);
@@ -37,23 +38,28 @@ body{font-family:var(--font-body);background:var(--paper);color:var(--ink);line-
 nav{position:fixed;top:0;left:0;right:0;z-index:200;padding:0.75rem 1.25rem;background:var(--paper);border-bottom:1px solid var(--rule);display:flex;justify-content:space-between;align-items:center;transition:transform 0.3s}
 nav .handle{font-family:var(--font-mono);font-size:0.65rem;color:var(--ink-3);text-decoration:none;letter-spacing:0.02em}
 nav .handle span{color:var(--accent)}
-nav .handle{font-family:var(--font-mono);font-size:0.65rem;color:var(--ink-3);text-decoration:none;letter-spacing:0.02em}
 
-.hero{min-height:90vh;display:flex;align-items:center;padding-top:4rem}
-.hero-inner{max-width:900px;margin:0 auto;padding:0 1.25rem;width:100%;position:relative;z-index:1;display:flex;align-items:center;gap:2.5rem}
-.hero-text{flex:1}
-.hero .tag{font-family:var(--font-mono);font-size:0.55rem;color:var(--ink-3);letter-spacing:0.12em;text-transform:uppercase;margin-bottom:1rem}
-.hero h1{font-size:clamp(2.5rem,6vw,4.5rem);font-weight:300;line-height:1.02;letter-spacing:-0.03em;margin-bottom:0.75rem;font-family:var(--font-display)}
+.hero{min-height:90vh;display:flex;align-items:center;padding-top:4rem;overflow:hidden;position:relative}
+.hero-inner{max-width:1100px;margin:0 auto;padding:0 1.25rem;width:100%;position:relative;z-index:2;display:flex;align-items:center;gap:3rem}
+.hero-left{flex:1;display:flex;flex-direction:column;align-items:flex-start;gap:1.25rem}
+.hero-right{flex:1;position:relative}
+.hero-right canvas{display:block;width:100%!important;height:auto!important;max-height:450px;border-radius:4px}
+.hero .tag{font-family:var(--font-mono);font-size:0.55rem;color:var(--ink-3);letter-spacing:0.12em;text-transform:uppercase}
+.hero h1{font-size:clamp(2.5rem,5vw,4rem);font-weight:300;line-height:1.02;letter-spacing:-0.03em;font-family:var(--font-display);min-height:1.3em}
 .hero h1 strong{font-weight:700;color:var(--accent)}
-.hero .subhead{font-size:clamp(0.85rem,1.3vw,0.95rem);color:var(--ink-2);max-width:480px;line-height:1.7;margin-bottom:1.5rem;font-weight:300}
+.hero .terminal-cursor{display:inline-block;width:2px;height:1em;background:var(--accent);margin-left:2px;animation:blink .7s infinite;vertical-align:text-bottom}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
+.hero .subhead{font-size:clamp(0.85rem,1.3vw,0.95rem);color:var(--ink-2);max-width:480px;line-height:1.7;margin-bottom:0;font-weight:300}
 .hero .cta-row{display:flex;gap:0.5rem;flex-wrap:wrap}
 .hero .cta-row a{text-decoration:none;padding:0.4rem 0.9rem;border:1px solid var(--rule);font-size:0.6rem;color:var(--ink-2);transition:all 0.2s;text-transform:uppercase;letter-spacing:0.06em;font-family:var(--font-mono)}
 .hero .cta-row a:hover{border-color:var(--ink);color:var(--ink)}
 .hero .cta-row a.primary{background:var(--ink);color:var(--paper);border-color:var(--ink)}
 .hero .cta-row a.primary:hover{background:var(--accent);border-color:var(--accent)}
-.hero-avatar{flex-shrink:0}
-.hero-avatar img{width:130px;height:130px;border-radius:50%;object-fit:cover;border:1px solid var(--rule);filter:grayscale(0.15)}
-@media(max-width:640px){.hero{min-height:auto;padding:5rem 0 2rem}.hero-inner{flex-direction:column-reverse;text-align:center}.hero .subhead{max-width:none}.hero .cta-row{justify-content:center}.hero-avatar img{width:90px;height:90px}}
+.hero-avatar{display:flex;gap:1rem;align-items:center}
+.hero-avatar img{width:60px;height:60px;border-radius:50%;object-fit:cover;border:1px solid var(--rule);filter:grayscale(0.15);flex-shrink:0}
+.hero .avatar-handle{font-family:var(--font-mono);font-size:0.55rem;color:var(--ink-3);letter-spacing:0.08em}
+.hero .avatar-handle span{color:var(--accent)}
+@media(max-width:768px){.hero{min-height:auto;padding:5rem 0 2rem}.hero-inner{flex-direction:column;gap:2rem}.hero-left{align-items:center;text-align:center}.hero .subhead{max-width:none}.hero .cta-row{justify-content:center}.hero-right{width:100%;height:250px}}
 
 .tech-strip{border-top:1px solid var(--rule);border-bottom:1px solid var(--rule);overflow:hidden;padding:0.6rem 0}
 .tech-track{display:flex;gap:1.5rem;animation:scroll 25s linear infinite;width:max-content;padding:0 1rem}
@@ -117,12 +123,16 @@ footer{border-top:1px solid var(--rule);padding:2rem 0;text-align:center;font-si
   <a href="#" class="handle"><span>@</span>devcristobalvc</a>
 </nav>
 
-<div class="hero">
+<div class="hero" id="hero">
   <div class="hero-inner">
-    <div class="hero-text">
+    <div class="hero-left">
+      <div class="hero-avatar">
+        <img src="https://avatars.githubusercontent.com/u/101788820?v=4" alt="Cristobal Valencia">
+        <span class="avatar-handle"><span>@</span>devcristobalvc</span>
+      </div>
       <div class="tag lang-en">AI Engineer · Full-Stack</div>
       <div class="tag lang-es">Ing. IA · Full-Stack</div>
-      <h1>Cristobal<br><strong>Valencia</strong></h1>
+      <h1 id="terminal-name"><span class="lang-en">Cristobal <strong>Valencia</strong></span><span class="lang-es">Cristobal <strong>Valencia</strong></span><span class="terminal-cursor"></span></h1>
       <p class="subhead lang-en">Building agentic systems at Rappi with LangGraph, FastAPI and a focus on data infrastructure.</p>
       <p class="subhead lang-es">Construyendo sistemas agénticos en Rappi con LangGraph, FastAPI e infraestructura de datos.</p>
       <div class="cta-row">
@@ -131,9 +141,7 @@ footer{border-top:1px solid var(--rule);padding:2rem 0;text-align:center;font-si
         <a href="mailto:cristobalvalencia3002@gmail.com">Email</a>
       </div>
     </div>
-    <div class="hero-avatar">
-      <img src="https://avatars.githubusercontent.com/u/101788820?v=4" alt="Cristobal Valencia">
-    </div>
+    <div class="hero-right" id="graph-container"></div>
   </div>
 </div>
 
@@ -204,7 +212,7 @@ footer{border-top:1px solid var(--rule);padding:2rem 0;text-align:center;font-si
     <div class="exp-item">
       <button class="exp-header">
         <div class="title-group"><div class="role lang-en">Full Stack Dev &amp; Tech Lead</div><div class="role lang-es">Full Stack &amp; Tech Lead</div><div class="company">Corp. Talentum</div></div>
-        <div class="meta"><span class="date">2024–2025</span><span class="toggle">+</span></div>
+        <div class="meta"><span class="date">Oct 2024 – Jul 2025</span><span class="toggle">+</span></div>
       </button>
       <div class="exp-body">
         <p class="lang-en">Led full stack development of digital platforms. Coordinated cross-functional teams, clients, and DevOps.</p>
@@ -216,7 +224,7 @@ footer{border-top:1px solid var(--rule);padding:2rem 0;text-align:center;font-si
     <div class="exp-item">
       <button class="exp-header">
         <div class="title-group"><div class="role lang-en">Blockchain Engineer &amp; BD</div><div class="role lang-es">Blockchain Engineer &amp; BD</div><div class="company">AsymmetricFrequency</div></div>
-        <div class="meta"><span class="date">2024–2025</span><span class="toggle">+</span></div>
+        <div class="meta"><span class="date">Jun 2024 – Sep 2025</span><span class="toggle">+</span></div>
       </button>
       <div class="exp-body">
         <p class="lang-en">Designed blockchain solutions for traceability and security. Led technical teams across full project lifecycle.</p>
@@ -314,8 +322,193 @@ footer{border-top:1px solid var(--rule);padding:2rem 0;text-align:center;font-si
 </footer>
 
 <script>
+// Terminal typing effect
+(function(){
+  const h1 = document.getElementById('terminal-name');
+  const cursor = h1.querySelector('.terminal-cursor');
+  const enSpan = h1.querySelector('.lang-en');
+  const esSpan = h1.querySelector('.lang-es');
+  const activeSpan = enSpan.style.display !== 'none' ? enSpan : esSpan;
+  const fullText = activeSpan.textContent || activeSpan.innerText;
+  
+  // Clear text, keep cursor
+  activeSpan.textContent = '';
+  activeSpan.appendChild(cursor);
+  
+  let idx = 0;
+  const chars = fullText.split('');
+  const typed = [];
+  
+  function typeChar(){
+    if(idx >= chars.length){
+      cursor.style.animation = 'blink .7s infinite';
+      return;
+    }
+    cursor.style.animation = 'none';
+    typed.push(chars[idx]);
+    // Build with HTML for <strong> support
+    let html = '';
+    let inStrong = false;
+    for(let c of typed){
+      if(c === '<'){ inStrong = true; continue; }
+      if(c === '>'){ inStrong = false; continue; }
+      if(c === '/' && inStrong){ continue; }
+      if(c === 's' && inStrong){ continue; }
+      if(c === 't' && inStrong){ continue; }
+      if(c === 'r' && inStrong){ continue; }
+      if(c === 'o' && inStrong){ continue; }
+      if(c === 'n' && inStrong){ continue; }
+      if(c === 'g' && inStrong){ continue; }
+      html += c;
+    }
+    html = html.replace(/Cristobal/g, 'Cristobal');
+    html = html.replace(/Valencia/g, '<strong>Valencia</strong>');
+    activeSpan.innerHTML = html + '<span class="terminal-cursor"></span>';
+    idx++;
+    setTimeout(typeChar, idx === 1 ? 600 : 50 + Math.random() * 70);
+  }
+  typeChar();
+})();
+
+// Three.js Graph
+(function(){
+  const container = document.getElementById('graph-container');
+  if(!container || typeof THREE === 'undefined') return;
+  
+  const w = container.clientWidth || 500;
+  const h = Math.min(w * 0.55, 400);
+  container.style.height = h + 'px';
+  
+  const scene = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(45, w/h, 0.1, 1000);
+  camera.position.z = 22;
+  
+  const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+  renderer.setSize(w, h);
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+  container.appendChild(renderer.domElement);
+  
+  const nodes = [];
+  const nodeCount = 32;
+  const colors = [0x8a9bb0, 0x6b7f9e, 0x5a6f8a, 0x4a5f7a];
+  
+  // Create nodes
+  for(let i = 0; i < nodeCount; i++){
+    const size = 0.12 + Math.random() * 0.25;
+    const geo = new THREE.SphereGeometry(size, 8, 8);
+    const mat = new THREE.MeshBasicMaterial({ 
+      color: colors[Math.floor(Math.random() * colors.length)],
+      transparent: true,
+      opacity: 0.6 + Math.random() * 0.4
+    });
+    const mesh = new THREE.Mesh(geo, mat);
+    mesh.position.set(
+      (Math.random() - 0.5) * 18,
+      (Math.random() - 0.5) * 10,
+      (Math.random() - 0.5) * 6
+    );
+    const speed = 0.002 + Math.random() * 0.008;
+    const drift = { x: (Math.random()-0.5)*0.01, y: (Math.random()-0.5)*0.01, z: 0 };
+    scene.add(mesh);
+    nodes.push({ mesh, vx: drift.x, vy: drift.y, baseX: mesh.position.x, baseY: mesh.position.y });
+  }
+  
+  // Add a few larger "hub" nodes
+  for(let i = 0; i < 3; i++){
+    const geo = new THREE.SphereGeometry(0.3, 12, 12);
+    const mat = new THREE.MeshBasicMaterial({ color: 0x6b8fc4, transparent: true, opacity: 0.8 });
+    const mesh = new THREE.Mesh(geo, mat);
+    mesh.position.set(
+      (Math.random() - 0.5) * 12,
+      (Math.random() - 0.5) * 7,
+      (Math.random() - 0.5) * 4
+    );
+    scene.add(mesh);
+    nodes.push({ mesh, vx: 0.003, vy: 0.003, baseX: mesh.position.x, baseY: mesh.position.y });
+  }
+  
+  // Edges
+  const edgeMat = new THREE.LineBasicMaterial({ color: 0x6b8fc4, transparent: true, opacity: 0.12 });
+  const edgeGroup = new THREE.Group();
+  scene.add(edgeGroup);
+  
+  function updateEdges(){
+    while(edgeGroup.children.length) edgeGroup.remove(edgeGroup.children[0]);
+    
+    for(let i = 0; i < nodes.length; i++){
+      for(let j = i+1; j < nodes.length; j++){
+        const a = nodes[i].mesh.position;
+        const b = nodes[j].mesh.position;
+        const dist = a.distanceTo(b);
+        if(dist < 5 && Math.random() < 0.15){
+          const points = [a.clone(), b.clone()];
+          const geo = new THREE.BufferGeometry().setFromPoints(points);
+          const line = new THREE.Line(geo, edgeMat);
+          edgeGroup.add(line);
+        }
+      }
+    }
+  }
+  updateEdges();
+  
+  // Particles
+  const particleCount = 200;
+  const partGeo = new THREE.BufferGeometry();
+  const partPos = new Float32Array(particleCount * 3);
+  for(let i = 0; i < particleCount * 3; i++){
+    partPos[i] = (Math.random() - 0.5) * 30;
+  }
+  partGeo.setAttribute('position', new THREE.BufferAttribute(partPos, 3));
+  const partMat = new THREE.PointsMaterial({
+    color: 0x8a9bb0,
+    size: 0.04,
+    transparent: true,
+    opacity: 0.3
+  });
+  const particles = new THREE.Points(partGeo, partMat);
+  scene.add(particles);
+  
+  let time = 0;
+  function animate(){
+    requestAnimationFrame(animate);
+    time += 0.005;
+    
+    // Float nodes
+    nodes.forEach((n, i) => {
+      n.mesh.position.x = n.baseX + Math.sin(time * 2 + i) * 0.3;
+      n.mesh.position.y = n.baseY + Math.cos(time * 1.7 + i * 0.5) * 0.3;
+    });
+    
+    // Rotate particles
+    particles.rotation.y = time * 0.03;
+    
+    // Camera orbit
+    camera.position.x = Math.sin(time * 0.15) * 4;
+    camera.position.z = 20 + Math.sin(time * 0.1) * 1;
+    camera.lookAt(0, 0, 0);
+    
+    renderer.render(scene, camera);
+  }
+  animate();
+  
+  // Resize
+  window.addEventListener('resize', () => {
+    const nw = container.clientWidth || 500;
+    const nh = Math.min(nw * 0.55, 400);
+    container.style.height = nh + 'px';
+    camera.aspect = nw / nh;
+    camera.updateProjectionMatrix();
+    renderer.setSize(nw, nh);
+  });
+})();
+
+// Accordion
 document.querySelectorAll('.exp-header').forEach(b=>{b.addEventListener('click',()=>{const i=b.closest('.exp-item'),o=i.classList.contains('open');document.querySelectorAll('.exp-item.open').forEach(e=>e.classList.remove('open'));if(!o)i.classList.add('open')})});
+
+// Nav hide on scroll
 let ls=0;const n=document.querySelector('nav');window.addEventListener('scroll',()=>{const c=window.scrollY;n.style.transform=c>ls&&c>80?'translateY(-100%)':'translateY(0)';ls=c});
+
+// Lang toggle
 document.querySelectorAll('.lang-toggle button').forEach(b=>{b.addEventListener('click',()=>{document.querySelectorAll('.lang-toggle button').forEach(b=>b.classList.remove('active'));b.classList.add('active');document.documentElement.dataset.lang=b.dataset.lang})});
 </script>
 </body>
