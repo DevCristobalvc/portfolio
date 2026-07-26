@@ -4,10 +4,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Cristobal Valencia · AI Engineer</title>
-<meta name="description" content="AI Software Engineer & Full-Stack Developer. Building intelligent systems with LangGraph, FastAPI, and Web3.">
+<meta name="description" content="AI Software Engineer & Full-Stack Developer. Building intelligent systems.">
 <meta property="og:title" content="Cristobal Valencia · AI Engineer">
 <meta property="og:description" content="AI Software Engineer & Full-Stack Developer.">
-<meta property="og:image" content="/og.png">
 <meta property="og:type" content="website">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -15,186 +14,132 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css">
 <style>
 :root {
-  --paper: oklch(97.5% 0.002 240);
-  --paper-2: oklch(94% 0.004 240);
-  --paper-3: oklch(88% 0.006 240);
-  --ink: oklch(16% 0.01 240);
-  --ink-2: oklch(36% 0.008 240);
-  --muted: oklch(52% 0.006 240);
-  --rule: oklch(82% 0.004 240);
-  --accent: oklch(52% 0.18 250);
-  --accent-2: oklch(45% 0.14 250);
-  --accent-glow: oklch(52% 0.18 250 / 0.15);
-  --focus: oklch(48% 0.22 250);
-  --accent-ink: oklch(98% 0.002 240);
+  --paper: oklch(99% 0.001 240);
+  --paper-2: oklch(96% 0.003 240);
+  --paper-3: oklch(92% 0.004 240);
+  --ink: oklch(15% 0.008 240);
+  --ink-2: oklch(35% 0.006 240);
+  --muted: oklch(55% 0.004 240);
+  --rule: oklch(88% 0.003 240);
+  --accent: oklch(50% 0.16 250);
+  --accent-2: oklch(42% 0.12 250);
+  --accent-glow: oklch(50% 0.16 250 / 0.08);
+  --focus: oklch(46% 0.20 250);
+  --accent-ink: oklch(99% 0.001 240);
   --font-display: 'Fraunces', Georgia, serif;
   --font-body: 'Inter Tight', system-ui, sans-serif;
   --font-mono: 'JetBrains Mono', monospace;
-  --space-xs: 0.25rem; --space-sm: 0.5rem; --space-md: 1rem;
-  --space-lg: 2rem; --space-xl: 4rem; --space-2xl: 6rem;
-  --radius: 4px;
+  --radius: 2px;
 }
-@media (prefers-color-scheme: dark) {
-  :root {
-    --paper: oklch(10% 0.006 240);
-    --paper-2: oklch(14% 0.008 240);
-    --paper-3: oklch(18% 0.008 240);
-    --ink: oklch(93% 0.004 240);
-    --ink-2: oklch(68% 0.006 240);
-    --muted: oklch(48% 0.006 240);
-    --rule: oklch(22% 0.008 240);
-    --accent: oklch(58% 0.18 250);
-    --accent-2: oklch(50% 0.14 250);
-    --accent-glow: oklch(58% 0.18 250 / 0.12);
-    --focus: oklch(62% 0.22 250);
-  }
-}
-[data-lang="es"] .lang-en { display: none; }
-[data-lang="en"] .lang-es { display: none; }
+[data-lang="es"] .lang-en { display: none !important; }
+[data-lang="en"] .lang-es { display: none !important; }
 * { margin:0; padding:0; box-sizing:border-box; }
-html { scroll-behavior:smooth; scrollbar-width:thin; scrollbar-color:var(--rule) transparent; }
-body {
-  font-family:var(--font-body); background:var(--paper); color:var(--ink);
-  line-height:1.6; -webkit-font-smoothing:antialiased; overflow-x:clip;
-}
+html { scroll-behavior:smooth; }
+body { font-family:var(--font-body); background:var(--paper); color:var(--ink); line-height:1.6; -webkit-font-smoothing:antialiased; }
 ::selection { background:var(--accent); color:var(--accent-ink); }
 
-/* ---- LANG TOGGLE ---- */
-.lang-toggle {
-  position:fixed; top:var(--space-md); right:var(--space-lg); z-index:200;
-  display:flex; gap:2px; background:var(--paper-2); border:1px solid var(--rule);
-  border-radius:var(--radius); padding:2px; font-family:var(--font-mono); font-size:0.7rem;
-}
-.lang-toggle button {
-  background:none; border:none; padding:4px 8px; cursor:pointer;
-  color:var(--muted); border-radius:2px; transition:all 0.2s;
-}
-.lang-toggle button.active { background:var(--accent); color:var(--accent-ink); }
-.lang-toggle button:hover:not(.active) { color:var(--ink); }
+/* ── LANG TOGGLE ── */
+.lang-toggle { position:fixed; top:1rem; right:1.5rem; z-index:200; display:flex; gap:0; background:var(--paper); border:1px solid var(--rule); border-radius:0; padding:0; }
+.lang-toggle button { background:none; border:none; padding:0.35rem 0.7rem; cursor:pointer; color:var(--muted); font-family:var(--font-mono); font-size:0.6rem; letter-spacing:0.05em; transition:all 0.2s; }
+.lang-toggle button.active { background:var(--ink); color:var(--paper); }
 
-/* ---- NAV ---- */
-nav {
-  position:fixed; top:0; left:0; right:0; z-index:100;
-  padding:var(--space-sm) var(--space-lg);
-  background:color-mix(in oklch, var(--paper) 80%, transparent);
-  backdrop-filter:blur(16px); -webkit-backdrop-filter:blur(16px);
-  border-bottom:1px solid var(--rule);
-  display:flex; justify-content:space-between; align-items:center;
-  transition:transform 0.3s;
-}
-nav .logo { font-family:var(--font-display); font-size:1.1rem; font-weight:600; color:var(--ink); text-decoration:none; letter-spacing:-0.02em; }
+/* ── NAV ── */
+nav { position:fixed; top:0; left:0; right:0; z-index:100; padding:0.75rem 1.5rem; background:var(--paper); border-bottom:1px solid var(--rule); display:flex; justify-content:space-between; align-items:center; transition:transform 0.3s; }
+nav .logo { font-family:var(--font-display); font-size:1rem; font-weight:600; text-decoration:none; letter-spacing:-0.02em; color:var(--ink); }
 nav .logo span { color:var(--accent); }
-nav .nav-links { display:flex; gap:var(--space-lg); list-style:none; }
-nav .nav-links a { text-decoration:none; color:var(--ink-2); font-size:0.8rem; font-weight:400; transition:color 0.2s; position:relative; }
-nav .nav-links a::after { content:''; position:absolute; bottom:-2px; left:0; width:0; height:1px; background:var(--accent); transition:width 0.3s; }
+nav .nav-links { display:flex; gap:1.5rem; list-style:none; }
+nav .nav-links a { text-decoration:none; color:var(--ink-2); font-size:0.75rem; font-weight:400; transition:color 0.2s; text-transform:uppercase; letter-spacing:0.06em; }
 nav .nav-links a:hover { color:var(--ink); }
-nav .nav-links a:hover::after { width:100%; }
-@media (max-width:640px) { nav .nav-links { display:none; } }
 
-/* ---- HERO ---- */
-.hero { min-height:100vh; display:flex; flex-direction:column; justify-content:center; padding-top:80px; position:relative; }
-.hero .tag { font-family:var(--font-mono); font-size:0.7rem; color:var(--accent); margin-bottom:var(--space-md); letter-spacing:0.08em; text-transform:uppercase; }
-.hero h1 { font-size:clamp(2.8rem, 7vw, 5.5rem); font-weight:700; line-height:1.05; letter-spacing:-0.03em; margin-bottom:var(--space-sm); font-family:var(--font-display); }
+/* ── HERO ── */
+.hero { min-height:100vh; display:flex; flex-direction:column; justify-content:center; padding-top:4rem; position:relative; }
+.hero-inner { display:flex; align-items:center; gap:3rem; max-width:900px; margin:0 auto; padding:0 1.5rem; position:relative; z-index:1; width:100%; }
+.hero-text { flex:1; }
+.hero .tag { font-family:var(--font-mono); font-size:0.6rem; color:var(--accent); margin-bottom:1rem; letter-spacing:0.1em; text-transform:uppercase; }
+.hero h1 { font-size:clamp(2.5rem, 6vw, 4.5rem); font-weight:700; line-height:1.05; letter-spacing:-0.03em; margin-bottom:0.5rem; font-family:var(--font-display); }
 .hero h1 .accent { color:var(--accent); }
-.hero .subhead { font-size:clamp(1rem, 2vw, 1.3rem); color:var(--ink-2); max-width:560px; line-height:1.6; margin-bottom:var(--space-lg); }
-.hero .cta-row { display:flex; gap:var(--space-md); flex-wrap:wrap; }
-.hero .cta-row a { text-decoration:none; padding:0.65rem 1.4rem; border-radius:var(--radius); font-size:0.85rem; font-weight:500; transition:all 0.25s; }
-.hero .cta-row a.primary { background:var(--accent); color:var(--accent-ink); }
-.hero .cta-row a.primary:hover { background:var(--accent-2); transform:translateY(-1px); }
-.hero .cta-row a.secondary { border:1px solid var(--rule); color:var(--ink); }
-.hero .cta-row a.secondary:hover { border-color:var(--ink); transform:translateY(-1px); }
-.hero .scroll-hint { position:absolute; bottom:var(--space-xl); left:50%; transform:translateX(-50%); font-family:var(--font-mono); font-size:0.65rem; color:var(--muted); animation:bob 2s ease-in-out infinite; }
-@keyframes bob { 0%,100% { transform:translateX(-50%) translateY(0); } 50% { transform:translateX(-50%) translateY(6px); } }
+.hero .subhead { font-size:clamp(0.9rem, 1.5vw, 1.05rem); color:var(--ink-2); max-width:480px; line-height:1.7; margin-bottom:1.5rem; }
+.hero .cta-row { display:flex; gap:0.75rem; flex-wrap:wrap; }
+.hero .cta-row a { text-decoration:none; padding:0.55rem 1.2rem; border:1px solid var(--rule); font-size:0.75rem; font-weight:500; transition:all 0.2s; color:var(--ink-2); text-transform:uppercase; letter-spacing:0.04em; font-family:var(--font-mono); }
+.hero .cta-row a:hover { border-color:var(--ink); color:var(--ink); }
+.hero .cta-row a.primary { background:var(--ink); color:var(--paper); border-color:var(--ink); }
+.hero .cta-row a.primary:hover { background:var(--accent); border-color:var(--accent); }
+.hero-avatar { flex-shrink:0; }
+.hero-avatar svg { width:140px; height:140px; border-radius:50%; border:1px solid var(--rule); }
+@media (max-width:640px) { .hero-inner { flex-direction:column-reverse; text-align:center; } .hero .subhead { max-width:none; } .hero .cta-row { justify-content:center; } .hero-avatar svg { width:100px; height:100px; } }
 
-/* ---- CANVAS ---- */
-#bg-canvas { position:fixed; top:0; left:0; width:100vw; height:100vh; z-index:0; pointer-events:none; }
-
-/* ---- LAYOUT ---- */
-.container { max-width:800px; margin:0 auto; padding:0 var(--space-lg); position:relative; z-index:1; }
-section { padding:var(--space-2xl) 0; }
-.section-label { font-family:var(--font-mono); font-size:0.65rem; letter-spacing:0.1em; color:var(--accent); margin-bottom:var(--space-xs); text-transform:uppercase; }
-.section-title { font-size:1.6rem; font-weight:600; letter-spacing:-0.02em; margin-bottom:var(--space-xl); font-family:var(--font-display); }
-
-/* ---- TECH CAROUSEL ---- */
-.tech-carousel { overflow:hidden; width:100%; margin-bottom:var(--space-xl); position:relative; }
-.tech-carousel::before, .tech-carousel::after { content:''; position:absolute; top:0; width:60px; height:100%; z-index:2; pointer-events:none; }
-.tech-carousel::before { left:0; background:linear-gradient(90deg, var(--paper), transparent); }
-.tech-carousel::after { right:0; background:linear-gradient(270deg, var(--paper), transparent); }
-.tech-track { display:flex; gap:var(--space-lg); animation:scroll 30s linear infinite; width:max-content; }
+/* ── TECH CAROUSEL ── */
+.tech-strip { border-top:1px solid var(--rule); border-bottom:1px solid var(--rule); overflow:hidden; padding:0.75rem 0; background:var(--paper); }
+.tech-track { display:flex; gap:2rem; animation:scroll 25s linear infinite; width:max-content; padding:0 1rem; }
 .tech-track:hover { animation-play-state:paused; }
 @keyframes scroll { 0% { transform:translateX(0); } 100% { transform:translateX(-50%); } }
-.tech-item { display:flex; flex-direction:column; align-items:center; gap:var(--space-xs); min-width:80px; }
-.tech-item i { font-size:1.8rem; color:var(--ink-2); transition:color 0.2s; }
+.tech-item { display:flex; align-items:center; gap:0.35rem; white-space:nowrap; }
+.tech-item i { font-size:1.2rem; color:var(--ink-2); transition:color 0.2s; }
 .tech-item:hover i { color:var(--accent); }
-.tech-item span { font-family:var(--font-mono); font-size:0.6rem; color:var(--muted); white-space:nowrap; }
+.tech-item span { font-family:var(--font-mono); font-size:0.6rem; color:var(--muted); text-transform:uppercase; letter-spacing:0.04em; }
 
-/* ---- STATS ---- */
-.stats-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:var(--space-md); margin-bottom:var(--space-xl); }
-.stat-card { background:var(--paper-2); border-radius:var(--radius); padding:var(--space-lg); border:1px solid var(--rule); text-align:center; }
-.stat-card .number { font-size:1.6rem; font-weight:700; color:var(--accent); font-family:var(--font-mono); }
-.stat-card .label { font-size:0.75rem; color:var(--muted); margin-top:var(--space-xs); font-family:var(--font-mono); }
-@media (max-width:640px) { .stats-grid { grid-template-columns:repeat(2,1fr); } }
+/* ── LAYOUT ── */
+.container { max-width:720px; margin:0 auto; padding:0 1.5rem; }
+section { padding:5rem 0; }
+.section-label { font-family:var(--font-mono); font-size:0.55rem; letter-spacing:0.15em; color:var(--muted); margin-bottom:0.25rem; text-transform:uppercase; }
+.section-title { font-size:1.3rem; font-weight:600; letter-spacing:-0.02em; margin-bottom:2rem; font-family:var(--font-display); }
 
-/* ---- ACCORDION ---- */
-.accordion { border-top:1px solid var(--rule); }
+/* ── STATS ── */
+.stats-row { display:flex; gap:2rem; margin-bottom:2rem; }
+.stat-item { }
+.stat-item .num { font-size:1.4rem; font-weight:700; color:var(--accent); font-family:var(--font-mono); }
+.stat-item .lbl { font-size:0.65rem; color:var(--muted); font-family:var(--font-mono); text-transform:uppercase; letter-spacing:0.05em; margin-top:0.1rem; }
+@media (max-width:640px) { .stats-row { gap:1rem; flex-wrap:wrap; } }
+
+/* ── ACCORDION ── */
+.accordion { }
 .accordion-item { border-bottom:1px solid var(--rule); }
-.accordion-header {
-  width:100%; display:flex; justify-content:space-between; align-items:center;
-  padding:var(--space-md) 0; background:none; border:none; cursor:pointer;
-  color:var(--ink); font-family:var(--font-body); font-size:0.9rem; text-align:left;
-  transition:color 0.2s; gap:var(--space-md);
-}
+.accordion-header { width:100%; display:flex; justify-content:space-between; align-items:center; padding:1rem 0; background:none; border:none; cursor:pointer; color:var(--ink); font-family:var(--font-body); font-size:0.85rem; text-align:left; transition:color 0.2s; gap:0.75rem; }
 .accordion-header:hover { color:var(--accent); }
 .accordion-header .title-group { flex:1; }
-.accordion-header .role { font-weight:600; font-size:0.95rem; }
-.accordion-header .company { font-size:0.8rem; color:var(--ink-2); }
-.accordion-header .date { font-family:var(--font-mono); font-size:0.65rem; color:var(--muted); white-space:nowrap; }
-.accordion-header .icon { font-size:1.1rem; transition:transform 0.3s; color:var(--muted); flex-shrink:0; }
+.accordion-header .role { font-weight:600; font-size:0.9rem; }
+.accordion-header .company { font-size:0.75rem; color:var(--ink-2); }
+.accordion-header .date { font-family:var(--font-mono); font-size:0.6rem; color:var(--muted); white-space:nowrap; }
+.accordion-header .icon { font-size:1rem; transition:transform 0.3s; color:var(--muted); flex-shrink:0; }
 .accordion-item.open .accordion-header .icon { transform:rotate(45deg); }
-.accordion-body { max-height:0; overflow:hidden; transition:max-height 0.4s ease; padding:0; }
-.accordion-item.open .accordion-body { max-height:500px; padding-bottom:var(--space-md); }
-.accordion-body ul { list-style:none; display:flex; flex-direction:column; gap:0.35rem; margin-bottom:var(--space-sm); }
-.accordion-body ul li { font-size:0.82rem; color:var(--ink-2); padding-left:var(--space-md); position:relative; }
-.accordion-body ul li::before { content:'→'; position:absolute; left:0; color:var(--accent); }
-.accordion-body .tech-stack { display:flex; flex-wrap:wrap; gap:0.3rem; }
-.accordion-body .tech-stack span { font-family:var(--font-mono); font-size:0.6rem; padding:0.15rem 0.5rem; background:var(--paper-3); border-radius:2px; color:var(--ink-2); }
+.accordion-body { max-height:0; overflow:hidden; transition:max-height 0.35s ease; padding:0; }
+.accordion-item.open .accordion-body { max-height:400px; padding-bottom:0.75rem; }
+.accordion-body p { font-size:0.8rem; color:var(--ink-2); line-height:1.6; margin-bottom:0.5rem; }
+.accordion-body .tech-stack { display:flex; flex-wrap:wrap; gap:0.25rem; }
+.accordion-body .tech-stack span { font-family:var(--font-mono); font-size:0.55rem; padding:0.15rem 0.4rem; background:var(--paper-2); border:1px solid var(--rule); color:var(--ink-2); }
 
-/* ---- SKILLS ---- */
-.skills-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:var(--space-md); }
-.skill-cat { background:var(--paper-2); border:1px solid var(--rule); border-radius:var(--radius); padding:var(--space-md); }
-.skill-cat h4 { font-size:0.7rem; font-weight:600; margin-bottom:var(--space-sm); color:var(--accent); font-family:var(--font-mono); text-transform:uppercase; letter-spacing:0.05em; }
-.skill-cat .tags { display:flex; flex-wrap:wrap; gap:0.3rem; }
-.skill-cat .tags span { font-family:var(--font-mono); font-size:0.6rem; padding:0.15rem 0.45rem; background:var(--paper-3); border-radius:2px; color:var(--ink-2); }
-@media (max-width:640px) { .skills-grid { grid-template-columns:1fr 1fr; } }
+/* ── SKILLS ── */
+.skills-row { display:flex; gap:1.5rem; flex-wrap:wrap; }
+.skill-cat { flex:1; min-width:160px; }
+.skill-cat h4 { font-size:0.6rem; font-weight:600; margin-bottom:0.5rem; color:var(--accent); font-family:var(--font-mono); text-transform:uppercase; letter-spacing:0.06em; }
+.skill-cat .tags { display:flex; flex-wrap:wrap; gap:0.25rem; }
+.skill-cat .tags span { font-family:var(--font-mono); font-size:0.55rem; padding:0.1rem 0.35rem; background:var(--paper-2); border:1px solid var(--rule); color:var(--ink-2); }
 
-/* ---- CONTACT ---- */
-.contact-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:var(--space-sm); }
-.contact-card {
-  background:var(--paper-2); border:1px solid var(--rule); border-radius:var(--radius);
-  padding:var(--space-md); text-decoration:none; color:var(--ink);
-  transition:all 0.25s; display:flex; align-items:center; gap:var(--space-sm);
-}
-.contact-card:hover { border-color:var(--accent); transform:translateY(-1px); }
-.contact-card .emoji { font-size:1.2rem; width:24px; text-align:center; }
-.contact-card .c-label { font-size:0.65rem; color:var(--muted); font-family:var(--font-mono); }
-.contact-card .c-value { font-size:0.78rem; font-weight:500; word-break:break-all; }
-@media (max-width:640px) { .contact-grid { grid-template-columns:1fr 1fr; } }
+/* ── CONTACT ── */
+.contact-row { display:flex; gap:1.5rem; flex-wrap:wrap; }
+.contact-card { text-decoration:none; color:var(--ink); display:flex; align-items:center; gap:0.5rem; padding:0.5rem 0.75rem; border:1px solid var(--rule); transition:all 0.2s; background:var(--paper); }
+.contact-card:hover { border-color:var(--ink); }
+.contact-card .emoji { font-size:1rem; }
+.contact-card .c-label { font-size:0.6rem; color:var(--muted); font-family:var(--font-mono); text-transform:uppercase; letter-spacing:0.05em; }
+.contact-card .c-value { font-size:0.72rem; font-weight:500; }
 
-/* ---- FOOTER ---- */
-footer { border-top:1px solid var(--rule); padding:var(--space-lg) 0; text-align:center; font-size:0.75rem; color:var(--muted); }
+/* ── FOOTER ── */
+footer { border-top:1px solid var(--rule); padding:2rem 0; text-align:center; font-size:0.7rem; color:var(--muted); font-family:var(--font-mono); }
 footer a { color:var(--ink); text-decoration:none; }
-footer a:hover { color:var(--accent); }
+
+/* ── SCROLL INDICATOR ── */
+.scroll-indicator { position:absolute; bottom:2rem; left:50%; transform:translateX(-50%); display:flex; flex-direction:column; align-items:center; gap:0.5rem; }
+.scroll-indicator span { font-family:var(--font-mono); font-size:0.5rem; color:var(--muted); letter-spacing:0.1em; text-transform:uppercase; animation:fadeInOut 2s ease-in-out infinite; }
+.scroll-indicator .line { width:1px; height:40px; background:var(--rule); }
+@keyframes fadeInOut { 0%,100% { opacity:0.3; } 50% { opacity:1; } }
 
 @media (max-width:640px) {
-  .container { padding:0 var(--space-md); }
-  section { padding:var(--space-xl) 0; }
-  .hero h1 { font-size:2.4rem; }
+  .container { padding:0 1rem; }
+  section { padding:3rem 0; }
 }
 </style>
 </head>
 <body>
-
-<canvas id="bg-canvas"></canvas>
 
 <div class="lang-toggle">
   <button data-lang="en" class="active">EN</button>
@@ -202,74 +147,96 @@ footer a:hover { color:var(--accent); }
 </div>
 
 <nav>
-  <a href="#" class="logo"><span>✦</span> cv</a>
+  <a href="#" class="logo"><span>✦</span> CV</a>
   <ul class="nav-links">
-    <li><a href="#exp" class="lang-en">Experience</a><a href="#exp" class="lang-es">Experiencia</a></li>
+    <li><a href="#exp"><span class="lang-en">Experience</span><span class="lang-es">Exp.</span></a></li>
     <li><a href="#skills">Skills</a></li>
-    <li><a href="#contact" class="lang-en">Contact</a><a href="#contact" class="lang-es">Contacto</a></li>
+    <li><a href="#contact"><span class="lang-en">Contact</span><span class="lang-es">Contacto</span></a></li>
   </ul>
 </nav>
 
 <section class="hero">
-  <div class="container">
-    <div class="tag lang-en">AI Engineer · Full-Stack · Tech Lead</div>
-    <div class="tag lang-es">Ing. IA · Full-Stack · Tech Lead</div>
-    <h1>Cristobal<br><span class="accent">Valencia</span></h1>
-    <p class="subhead lang-en">
-      AI Software Engineer at Rappi. Building agentic systems with LangGraph, 
-      FastAPI, and Web3. Previously leading full-stack teams at Talentum.
-    </p>
-    <p class="subhead lang-es">
-      Ingeniero de IA en Rappi. Construyo sistemas agénticos con LangGraph,
-      FastAPI y Web3. Liderando equipos full-stack en Talentum.
-    </p>
-    <div class="cta-row">
-      <a href="#exp" class="primary lang-en">Experience →</a>
-      <a href="#exp" class="primary lang-es">Experiencia →</a>
-      <a href="mailto:cristobalvalencia3002@gmail.com" class="secondary lang-en">Get in Touch</a>
-      <a href="mailto:cristobalvalencia3002@gmail.com" class="secondary lang-es">Contactar</a>
+  <div class="hero-inner">
+    <div class="hero-text">
+      <div class="tag lang-en">AI Engineer · Full-Stack · Colombia</div>
+      <div class="tag lang-es">Ing. IA · Full-Stack · Colombia</div>
+      <h1>Cristobal<br><span class="accent">Valencia</span></h1>
+      <p class="subhead lang-en">
+        Building agentic systems at Rappi. LangGraph, FastAPI, Web3.
+      </p>
+      <p class="subhead lang-es">
+        Construyo sistemas agénticos en Rappi. LangGraph, FastAPI, Web3.
+      </p>
+      <div class="cta-row">
+        <a href="#exp" class="primary"><span class="lang-en">Experience</span><span class="lang-es">Experiencia</span></a>
+        <a href="https://github.com/DevCristobalvc" target="_blank" rel="noopener">GitHub</a>
+        <a href="mailto:cristobalvalencia3002@gmail.com"><span class="lang-en">Email</span><span class="lang-es">Email</span></a>
+      </div>
+    </div>
+    <div class="hero-avatar">
+      <svg viewBox="0 0 100 100" fill="none">
+        <rect width="100" height="100" rx="50" fill="var(--paper-2)" stroke="var(--rule)" stroke-width="1"/>
+        <circle cx="50" cy="38" r="16" fill="var(--accent)" opacity="0.15"/>
+        <circle cx="50" cy="38" r="10" fill="var(--accent)" opacity="0.3"/>
+        <circle cx="50" cy="38" r="4" fill="var(--accent)"/>
+        <ellipse cx="50" cy="70" rx="24" ry="16" fill="var(--accent)" opacity="0.12"/>
+        <path d="M38 60 Q45 52 50 55 Q55 52 62 60" stroke="var(--accent)" stroke-width="1.5" fill="none" opacity="0.3"/>
+      </svg>
     </div>
   </div>
-  <div class="scroll-hint">↓</div>
+  <div class="scroll-indicator">
+    <span>Scroll</span>
+    <div class="line"></div>
+  </div>
 </section>
 
 <!-- TECH CAROUSEL -->
+<div class="tech-strip">
+  <div class="tech-track">
+    <div class="tech-item"><i class="devicon-python-plain colored"></i><span>Python</span></div>
+    <div class="tech-item"><i class="devicon-fastapi-plain colored"></i><span>FastAPI</span></div>
+    <div class="tech-item"><i class="devicon-react-original colored"></i><span>React</span></div>
+    <div class="tech-item"><i class="devicon-nextjs-original"></i><span>Next.js</span></div>
+    <div class="tech-item"><i class="devicon-typescript-plain colored"></i><span>TypeScript</span></div>
+    <div class="tech-item"><i class="devicon-postgresql-plain colored"></i><span>PostgreSQL</span></div>
+    <div class="tech-item"><i class="devicon-docker-plain colored"></i><span>Docker</span></div>
+    <div class="tech-item"><i class="devicon-amazonwebservices-plain-wordmark colored"></i><span>AWS</span></div>
+    <div class="tech-item"><i class="devicon-solidity-plain colored"></i><span>Solidity</span></div>
+    <div class="tech-item"><i class="devicon-nodejs-plain colored"></i><span>Node.js</span></div>
+    <div class="tech-item"><i class="devicon-nestjs-plain colored"></i><span>NestJS</span></div>
+    <div class="tech-item"><i class="devicon-linux-plain colored"></i><span>Linux</span></div>
+    <div class="tech-item"><i class="devicon-github-original colored"></i><span>Git</span></div>
+    <div class="tech-item"><i class="devicon-laravel-plain colored"></i><span>Laravel</span></div>
+    <div class="tech-item"><i class="devicon-angularjs-plain colored"></i><span>Angular</span></div>
+    <div class="tech-item"><i class="devicon-django-plain colored"></i><span>Django</span></div>
+    <!-- DUP -->
+    <div class="tech-item"><i class="devicon-python-plain colored"></i><span>Python</span></div>
+    <div class="tech-item"><i class="devicon-fastapi-plain colored"></i><span>FastAPI</span></div>
+    <div class="tech-item"><i class="devicon-react-original colored"></i><span>React</span></div>
+    <div class="tech-item"><i class="devicon-nextjs-original"></i><span>Next.js</span></div>
+    <div class="tech-item"><i class="devicon-typescript-plain colored"></i><span>TypeScript</span></div>
+    <div class="tech-item"><i class="devicon-postgresql-plain colored"></i><span>PostgreSQL</span></div>
+    <div class="tech-item"><i class="devicon-docker-plain colored"></i><span>Docker</span></div>
+    <div class="tech-item"><i class="devicon-amazonwebservices-plain-wordmark colored"></i><span>AWS</span></div>
+    <div class="tech-item"><i class="devicon-solidity-plain colored"></i><span>Solidity</span></div>
+    <div class="tech-item"><i class="devicon-nodejs-plain colored"></i><span>Node.js</span></div>
+    <div class="tech-item"><i class="devicon-nestjs-plain colored"></i><span>NestJS</span></div>
+    <div class="tech-item"><i class="devicon-linux-plain colored"></i><span>Linux</span></div>
+    <div class="tech-item"><i class="devicon-github-original colored"></i><span>Git</span></div>
+    <div class="tech-item"><i class="devicon-laravel-plain colored"></i><span>Laravel</span></div>
+    <div class="tech-item"><i class="devicon-angularjs-plain colored"></i><span>Angular</span></div>
+    <div class="tech-item"><i class="devicon-django-plain colored"></i><span>Django</span></div>
+  </div>
+</div>
+
+<!-- STATS + BRIEF -->
 <section>
   <div class="container">
-    <div class="tech-carousel">
-      <div class="tech-track">
-        <div class="tech-item"><i class="devicon-python-plain"></i><span>Python</span></div>
-        <div class="tech-item"><i class="devicon-fastapi-plain"></i><span>FastAPI</span></div>
-        <div class="tech-item"><i class="devicon-react-original"></i><span>React</span></div>
-        <div class="tech-item"><i class="devicon-nextjs-original"></i><span>Next.js</span></div>
-        <div class="tech-item"><i class="devicon-typescript-plain"></i><span>TypeScript</span></div>
-        <div class="tech-item"><i class="devicon-postgresql-plain"></i><span>PostgreSQL</span></div>
-        <div class="tech-item"><i class="devicon-docker-plain"></i><span>Docker</span></div>
-        <div class="tech-item"><i class="devicon-amazonwebservices-plain-wordmark"></i><span>AWS</span></div>
-        <div class="tech-item"><i class="devicon-solidity-plain"></i><span>Solidity</span></div>
-        <div class="tech-item"><i class="devicon-nodejs-plain"></i><span>Node.js</span></div>
-        <div class="tech-item"><i class="devicon-nestjs-plain"></i><span>NestJS</span></div>
-        <div class="tech-item"><i class="devicon-linux-plain"></i><span>Linux</span></div>
-        <!-- DUPLICATE FOR INFINITE SCROLL -->
-        <div class="tech-item"><i class="devicon-python-plain"></i><span>Python</span></div>
-        <div class="tech-item"><i class="devicon-fastapi-plain"></i><span>FastAPI</span></div>
-        <div class="tech-item"><i class="devicon-react-original"></i><span>React</span></div>
-        <div class="tech-item"><i class="devicon-nextjs-original"></i><span>Next.js</span></div>
-        <div class="tech-item"><i class="devicon-typescript-plain"></i><span>TypeScript</span></div>
-        <div class="tech-item"><i class="devicon-postgresql-plain"></i><span>PostgreSQL</span></div>
-        <div class="tech-item"><i class="devicon-docker-plain"></i><span>Docker</span></div>
-        <div class="tech-item"><i class="devicon-amazonwebservices-plain-wordmark"></i><span>AWS</span></div>
-        <div class="tech-item"><i class="devicon-solidity-plain"></i><span>Solidity</span></div>
-        <div class="tech-item"><i class="devicon-nodejs-plain"></i><span>Node.js</span></div>
-        <div class="tech-item"><i class="devicon-nestjs-plain"></i><span>NestJS</span></div>
-        <div class="tech-item"><i class="devicon-linux-plain"></i><span>Linux</span></div>
-      </div>
-    </div>
-    <div class="stats-grid">
-      <div class="stat-card"><div class="number">3+</div><div class="label lang-en">Years Building</div><div class="label lang-es">Años Creando</div></div>
-      <div class="stat-card"><div class="number">10+</div><div class="label lang-en">Projects Shipped</div><div class="label lang-es">Proyectos</div></div>
-      <div class="stat-card"><div class="number">6</div><div class="label lang-en">Tech Stacks</div><div class="label lang-es">Stacks</div></div>
-      <div class="stat-card"><div class="number">∞</div><div class="label lang-en">Curiosity</div><div class="label lang-es">Curiosidad</div></div>
+    <div class="stats-row">
+      <div class="stat-item"><div class="num">3+</div><div class="lbl lang-en">Years</div><div class="lbl lang-es">Años</div></div>
+      <div class="stat-item"><div class="num">10+</div><div class="lbl lang-en">Projects</div><div class="lbl lang-es">Proyectos</div></div>
+      <div class="stat-item"><div class="num">6</div><div class="lbl lang-en">Stacks</div><div class="lbl lang-es">Stacks</div></div>
+      <div class="stat-item"><div class="num">∞</div><div class="lbl lang-en">Curiosity</div><div class="lbl lang-es">Curiosidad</div></div>
     </div>
   </div>
 </section>
@@ -277,10 +244,9 @@ footer a:hover { color:var(--accent); }
 <!-- EXPERIENCE -->
 <section id="exp">
   <div class="container">
-    <div class="section-label lang-en">01 · Experience</div>
-    <div class="section-label lang-es">01 · Experiencia</div>
-    <h2 class="section-title lang-en">Where I've built</h2>
-    <h2 class="section-title lang-es">Donde he construido</h2>
+    <div class="section-label">01</div>
+    <h2 class="section-title lang-en">Experience</h2>
+    <h2 class="section-title lang-es">Experiencia</h2>
     <div class="accordion">
       <div class="accordion-item open">
         <button class="accordion-header">
@@ -288,72 +254,52 @@ footer a:hover { color:var(--accent); }
           <span class="date">2025–2026</span><span class="icon">+</span>
         </button>
         <div class="accordion-body">
-          <ul>
-            <li class="lang-en">Built AI features at scale with LangGraph + FastAPI</li>
-            <li class="lang-es">Construí features de IA a escala con LangGraph + FastAPI</li>
-            <li class="lang-en">Designed MCP tool schemas for LLM agent systems</li>
-            <li class="lang-es">Diseñé esquemas MCP para sistemas agénticos LLM</li>
-            <li class="lang-en">Observability pipelines (Langfuse, LangSmith)</li>
-            <li class="lang-es">Pipelines de observabilidad (Langfuse, LangSmith)</li>
-            <li class="lang-en">Data pipelines with PostgreSQL + Redash</li>
-            <li class="lang-es">Pipelines de datos con PostgreSQL + Redash</li>
-          </ul>
+          <p class="lang-en">Built AI-driven features at scale. Designed agentic workflows with LangGraph + FastAPI, defined MCP tool schemas, and implemented observability pipelines (Langfuse, LangSmith). Drove context-injection strategies with PostgreSQL + Redash.</p>
+          <p class="lang-es">Construí features de IA a escala. Diseñé flujos agénticos con LangGraph + FastAPI, esquemas MCP, y pipelines de observabilidad (Langfuse, LangSmith). Estrategias de inyección de contexto con PostgreSQL + Redash.</p>
           <div class="tech-stack"><span>FastAPI</span><span>LangGraph</span><span>Langfuse</span><span>PostgreSQL</span><span>Redash</span></div>
         </div>
       </div>
       <div class="accordion-item">
         <button class="accordion-header">
-          <div class="title-group"><span class="role lang-en">Full Stack Developer & Tech Lead</span><span class="role lang-es">Full Stack Dev & Tech Lead</span><span class="company">Corp. Talentum</span></div>
+          <div class="title-group"><span class="role lang-en">Full Stack Dev &amp; Tech Lead</span><span class="role lang-es">Full Stack &amp; Tech Lead</span><span class="company">Corp. Talentum</span></div>
           <span class="date">2024–2025</span><span class="icon">+</span>
         </button>
         <div class="accordion-body">
-          <ul>
-            <li class="lang-en">Led full stack development of digital platforms</li>
-            <li class="lang-es">Lideré desarrollo full stack de plataformas digitales</li>
-            <li class="lang-en">Coordinated teams, clients, and DevOps</li>
-            <li class="lang-es">Coordiné equipos, clientes y DevOps</li>
-          </ul>
+          <p class="lang-en">Led full stack development of digital platforms. Coordinated teams, clients, and DevOps. Technical decision-making and PoC validation.</p>
+          <p class="lang-es">Lideré desarrollo full stack de plataformas digitales. Coordinación de equipos, clientes y DevOps. Decisiones técnicas y validación de PoCs.</p>
           <div class="tech-stack"><span>Next.js</span><span>NestJS</span><span>PostgreSQL</span><span>Docker</span></div>
         </div>
       </div>
       <div class="accordion-item">
         <button class="accordion-header">
-          <div class="title-group"><span class="role lang-en">Blockchain Engineer & BD</span><span class="role lang-es">Blockchain Engineer & BD</span><span class="company">AsymmetricFrequency</span></div>
+          <div class="title-group"><span class="role lang-en">Blockchain Engineer</span><span class="role lang-es">Blockchain Engineer</span><span class="company">AsymmetricFrequency</span></div>
           <span class="date">2024–2025</span><span class="icon">+</span>
         </button>
         <div class="accordion-body">
-          <ul>
-            <li class="lang-en">Designed blockchain solutions for traceability</li>
-            <li class="lang-es">Diseñé soluciones blockchain con trazabilidad</li>
-            <li class="lang-en">Led technical teams and full project lifecycle</li>
-            <li class="lang-es">Lideré equipos técnicos y ciclo de vida de proyectos</li>
-          </ul>
+          <p class="lang-en">Designed blockchain solutions for traceability and security. Led technical teams across full project lifecycle.</p>
+          <p class="lang-es">Diseñé soluciones blockchain con trazabilidad y seguridad. Lideré equipos técnicos en ciclo completo de proyectos.</p>
           <div class="tech-stack"><span>Ethereum</span><span>Solidity</span><span>Web3</span><span>TRON</span></div>
         </div>
       </div>
       <div class="accordion-item">
         <button class="accordion-header">
-          <div class="title-group"><span class="role lang-en">Power Platform Developer</span><span class="role lang-es">Desarrollador Power Platform</span><span class="company">CAF — Development Bank</span></div>
+          <div class="title-group"><span class="role lang-en">Power Platform Dev</span><span class="role lang-es">Dev Power Platform</span><span class="company">CAF — Development Bank</span></div>
           <span class="date">2024</span><span class="icon">+</span>
         </button>
         <div class="accordion-body">
-          <ul>
-            <li class="lang-en">Automated cybersecurity & role management processes</li>
-            <li class="lang-es">Automaticé procesos de ciberseguridad y roles</li>
-          </ul>
+          <p class="lang-en">Automated cybersecurity and role management processes. Built dashboards and BPM-aligned workflows.</p>
+          <p class="lang-es">Automaticé procesos de ciberseguridad y gestión de roles. Tableros y flujos alineados a BPM.</p>
           <div class="tech-stack"><span>C#</span><span>Power Platform</span></div>
         </div>
       </div>
       <div class="accordion-item">
         <button class="accordion-header">
-          <div class="title-group"><span class="role lang-en">Full Stack Developer</span><span class="role lang-es">Desarrollador Full Stack</span><span class="company">Univ. Santiago de Cali</span></div>
+          <div class="title-group"><span class="role lang-en">Full Stack Dev</span><span class="role lang-es">Full Stack Dev</span><span class="company">Univ. Santiago de Cali</span></div>
           <span class="date">2024</span><span class="icon">+</span>
         </button>
         <div class="accordion-body">
-          <ul>
-            <li class="lang-en">Developed SIPAC modules for university administration</li>
-            <li class="lang-es">Desarrollé módulos SIPAC para administración</li>
-          </ul>
+          <p class="lang-en">Developed SIPAC modules for administrative areas. Led stakeholder requirements sessions.</p>
+          <p class="lang-es">Desarrollé módulos SIPAC para áreas administrativas. Lideré sesiones de requerimientos.</p>
           <div class="tech-stack"><span>Laravel</span><span>SQL Server</span></div>
         </div>
       </div>
@@ -363,10 +309,8 @@ footer a:hover { color:var(--accent); }
           <span class="date">2023</span><span class="icon">+</span>
         </button>
         <div class="accordion-body">
-          <ul>
-            <li class="lang-en">Digital tools for administrative management</li>
-            <li class="lang-es">Herramientas digitales para gestión administrativa</li>
-          </ul>
+          <p class="lang-en">Digital tools for administrative management. Automated document workflows.</p>
+          <p class="lang-es">Herramientas digitales para gestión administrativa. Automatización de documentos.</p>
           <div class="tech-stack"><span>Python</span><span>M365</span></div>
         </div>
       </div>
@@ -377,16 +321,16 @@ footer a:hover { color:var(--accent); }
 <!-- SKILLS -->
 <section id="skills">
   <div class="container">
-    <div class="section-label">02 · Skills</div>
-    <h2 class="section-title lang-en">What I wield</h2>
-    <h2 class="section-title lang-es">Lo que manejo</h2>
-    <div class="skills-grid">
+    <div class="section-label">02</div>
+    <h2 class="section-title lang-en">Skills</h2>
+    <h2 class="section-title lang-es">Habilidades</h2>
+    <div class="skills-row">
       <div class="skill-cat"><h4>AI / LLM</h4><div class="tags"><span>FastAPI</span><span>LangGraph</span><span>LangChain</span><span>Langfuse</span><span>Prompting</span></div></div>
       <div class="skill-cat"><h4>Frontend</h4><div class="tags"><span>Next.js</span><span>React</span><span>TypeScript</span><span>Angular</span><span>Tailwind</span></div></div>
-      <div class="skill-cat"><h4>Backend</h4><div class="tags"><span>Python</span><span>NestJS</span><span>Django</span><span>Node.js</span><span>FastAPI</span></div></div>
+      <div class="skill-cat"><h4>Backend</h4><div class="tags"><span>Python</span><span>NestJS</span><span>Django</span><span>Node.js</span><span>Laravel</span></div></div>
       <div class="skill-cat"><h4>Blockchain</h4><div class="tags"><span>Solidity</span><span>Ethereum</span><span>Web3</span><span>TRON</span><span>ZKP</span></div></div>
       <div class="skill-cat"><h4>Data / Infra</h4><div class="tags"><span>PostgreSQL</span><span>Docker</span><span>AWS</span><span>Linux</span><span>Redash</span></div></div>
-      <div class="skill-cat"><h4 lang="en">Leadership</h4><h4 lang="es">Liderazgo</h4><div class="tags"><span lang="en">Tech Lead</span><span lang="es">Tech Lead</span><span>IEEE Chair</span><span lang="en">Mentoring</span><span lang="es">Mentoría</span><span>PoC</span><span>Web3</span></div></div>
+      <div class="skill-cat"><h4 lang="en">Leadership</h4><h4 lang="es">Liderazgo</h4><div class="tags"><span>Tech Lead</span><span>IEEE Chair</span><span lang="en">Mentoring</span><span lang="es">Mentoría</span><span>PoC</span></div></div>
     </div>
   </div>
 </section>
@@ -394,10 +338,10 @@ footer a:hover { color:var(--accent); }
 <!-- CONTACT -->
 <section id="contact">
   <div class="container">
-    <div class="section-label">03 · Contact</div>
-    <h2 class="section-title lang-en">Let's connect</h2>
-    <h2 class="section-title lang-es">Conectemos</h2>
-    <div class="contact-grid">
+    <div class="section-label">03</div>
+    <h2 class="section-title lang-en">Contact</h2>
+    <h2 class="section-title lang-es">Contacto</h2>
+    <div class="contact-row">
       <a href="mailto:cristobalvalencia3002@gmail.com" class="contact-card">
         <span class="emoji">✉</span>
         <div><div class="c-label">Email</div><div class="c-value">cristobalvalencia3002@gmail.com</div></div>
@@ -416,41 +360,16 @@ footer a:hover { color:var(--accent); }
       </a>
       <a href="https://x.com/devcristobalvc" target="_blank" rel="noopener" class="contact-card">
         <span class="emoji">𝕏</span>
-        <div><div class="c-label">X / Twitter</div><div class="c-value">@devcristobalvc</div></div>
-      </a>
-      <a href="https://gitlab.com/DevCristobalvc" target="_blank" rel="noopener" class="contact-card">
-        <span class="emoji">🦊</span>
-        <div><div class="c-label">GitLab</div><div class="c-value">@DevCristobalvc</div></div>
+        <div><div class="c-label">X</div><div class="c-value">@devcristobalvc</div></div>
       </a>
     </div>
   </div>
 </section>
 
 <footer>
-  <div class="container">
-    <p>© 2026 <a href="#">Cristobal Valencia</a> · <span class="lang-en">Built with</span><span class="lang-es">Hecho con</span> <span style="color:var(--accent)">✦</span> <span class="lang-en">from Cali, Colombia</span><span class="lang-es">desde Cali, Colombia</span></p>
-  </div>
+  <p>© 2026 Cristobal Valencia · <span class="lang-en">Built from</span><span class="lang-es">Hecho desde</span> Cali, Colombia</p>
 </footer>
 
-<script type="importmap">{ "imports": { "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js" } }</script>
-<script type="module">
-import * as THREE from 'three';
-const c=document.getElementById('bg-canvas'),r=new THREE.WebGLRenderer({canvas:c,alpha:true,antialias:true});
-r.setPixelRatio(Math.min(window.devicePixelRatio,2));r.setSize(window.innerWidth,window.innerHeight);
-const s=new THREE.Scene(),cm=new THREE.PerspectiveCamera(75,window.innerWidth/window.innerHeight,0.1,1000);cm.position.z=50;
-const isDark=window.matchMedia('(prefers-color-scheme:dark)').matches,cl=isDark?0x4488ff:0x2255cc;
-const cg=new THREE.BoxGeometry(16,16,16),cmat=new THREE.MeshBasicMaterial({color:cl,wireframe:true,transparent:true,opacity:0.06});
-const cube=new THREE.Mesh(cg,cmat);s.add(cube);
-const nc=80,pos=[],cols=[],nodes=[];
-for(let i=0;i<nc;i++){const r=12+Math.random()*8,t=Math.random()*Math.PI*2,p=Math.acos(2*Math.random()-1);const x=r*Math.sin(p)*Math.cos(t),y=r*Math.sin(p)*Math.sin(t),z=r*Math.cos(p);pos.push(x,y,z);const col=new THREE.Color().setHSL(0.6+Math.random()*0.1,0.6,isDark?0.5:0.35);cols.push(col.r,col.g,col.b);nodes.push(new THREE.Vector3(x,y,z))}
-const g=new THREE.BufferGeometry();g.setAttribute('position',new THREE.Float32BufferAttribute(pos,3));g.setAttribute('color',new THREE.Float32BufferAttribute(cols,3));
-const pt=new THREE.Points(g,new THREE.PointsMaterial({size:0.22,vertexColors:true,transparent:true,opacity:0.6,blending:THREE.AdditiveBlending}));s.add(pt);
-const ep=[];for(let i=0;i<nc;i++)for(let j=i+1;j<nc;j++){const d=nodes[i].distanceTo(nodes[j]);if(d<6){ep.push(nodes[i].x,nodes[i].y,nodes[i].z);ep.push(nodes[j].x,nodes[j].y,nodes[j].z)}}
-const eg=new THREE.BufferGeometry();eg.setAttribute('position',new THREE.Float32BufferAttribute(ep,3));const el=new THREE.LineSegments(eg,new THREE.LineBasicMaterial({color:cl,transparent:true,opacity:0.03,blending:THREE.AdditiveBlending}));s.add(el);
-let mx=0,my=0;document.addEventListener('mousemove',e=>{mx=(e.clientX/window.innerWidth)*2-1;my=-(e.clientY/window.innerHeight)*2+1});
-function a(){requestAnimationFrame(a);const t=Date.now()*0.00015;cube.rotation.x=t*0.3;cube.rotation.y=t*0.5;pt.rotation.x=t*0.2;pt.rotation.y=t*0.4;el.rotation.x=t*0.2;el.rotation.y=t*0.4;cube.position.x+=(mx*2-cube.position.x)*0.01;cube.position.y+=(my*2-cube.position.y)*0.01;pt.position.copy(cube.position);el.position.copy(cube.position);r.render(s,cm)}a();
-window.addEventListener('resize',()=>{cm.aspect=window.innerWidth/window.innerHeight;cm.updateProjectionMatrix();r.setSize(window.innerWidth,window.innerHeight)});
-</script>
 <script>
 document.querySelectorAll('.accordion-header').forEach(b=>{b.addEventListener('click',()=>{const i=b.parentElement,o=i.classList.contains('open');document.querySelectorAll('.accordion-item.open').forEach(e=>e.classList.remove('open'));if(!o)i.classList.add('open')})});
 let ls=0;const n=document.querySelector('nav');window.addEventListener('scroll',()=>{const c=window.scrollY;n.style.transform=c>ls&&c>80?'translateY(-100%)':'translateY(0)';ls=c});
