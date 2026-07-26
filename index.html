@@ -9,7 +9,6 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,300;1,9..144,400&family=JetBrains+Mono:wght@400;500;600&family=Inter+Tight:wght@300;400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <style>
 :root {
   --paper: oklch(99% 0 0);
@@ -40,8 +39,6 @@ nav .handle{font-family:var(--font-mono);font-size:0.65rem;color:var(--ink-3);te
 nav .handle span{color:var(--accent)}
 
 .hero{min-height:90vh;display:flex;align-items:center;padding-top:4rem;overflow:hidden;position:relative}
-.hero-bg{position:absolute;top:0;left:0;width:100%;height:100%;z-index:1;opacity:0.25;pointer-events:none}
-.hero-bg canvas{display:block;width:100%!important;height:100%!important}
 .hero-inner{max-width:1100px;margin:0 auto;padding:0 1.25rem;width:100%;position:relative;z-index:2;display:flex;align-items:center;gap:3rem}
 .hero-left{flex:1;display:flex;flex-direction:column;align-items:flex-start;gap:1.25rem}
 .hero .tag{font-family:var(--font-mono);font-size:0.55rem;color:var(--ink-3);letter-spacing:0.12em;text-transform:uppercase}
@@ -126,7 +123,6 @@ footer{border-top:1px solid var(--rule);padding:2rem 0;text-align:center;font-si
 </nav>
 
 <div class="hero" id="hero">
-  <div class="hero-bg" id="graph-bg"></div>
   <div class="hero-inner">
     <div class="hero-left">
       <div class="hero-avatar">
@@ -136,8 +132,8 @@ footer{border-top:1px solid var(--rule);padding:2rem 0;text-align:center;font-si
       <div class="tag lang-en">AI Engineer · Full-Stack</div>
       <div class="tag lang-es">Ing. IA · Full-Stack</div>
       <h1><span class="prompt">$ ./whoami</span><span id="terminal-name"><span class="lang-en">Cristobal <strong>Valencia</strong></span><span class="lang-es">Cristobal <strong>Valencia</strong></span><span class="terminal-cursor"></span></span></h1>
-      <p class="subhead lang-en">Building agentic systems at Rappi with LangGraph, FastAPI and a focus on data infrastructure.</p>
-      <p class="subhead lang-es">Construyendo sistemas agénticos en Rappi con LangGraph, FastAPI e infraestructura de datos.</p>
+      <p class="subhead lang-en">Building agentic systems with LangGraph, FastAPI and data infrastructure.</p>
+      <p class="subhead lang-es">Construyendo sistemas agénticos con LangGraph, FastAPI e infraestructura de datos.</p>
       <div class="cta-row">
         <a href="#exp" class="primary"><span class="lang-en">Experience</span><span class="lang-es">Experiencia</span></a>
         <a href="https://github.com/DevCristobalvc" target="_blank" rel="noopener">GitHub</a>
@@ -205,8 +201,8 @@ footer{border-top:1px solid var(--rule);padding:2rem 0;text-align:center;font-si
         <div class="meta"><span class="date">Sep 2025 – Jun 2026</span><span class="toggle">+</span></div>
       </button>
       <div class="exp-body">
-        <p class="lang-en">Built AI-driven features at scale. Designed agentic workflows with LangGraph and FastAPI, defined MCP tool schemas, and built observability pipelines with Langfuse and LangSmith. Drove data strategies with PostgreSQL and Redash.</p>
-        <p class="lang-es">Construí features de IA a escala. Diseñé flujos agénticos con LangGraph y FastAPI, esquemas MCP, y pipelines de observabilidad con Langfuse y LangSmith.</p>
+        <p class="lang-en">Built AI-driven features at scale. Designed agentic workflows with LangGraph and FastAPI with observability pipelines. Drove data strategies with PostgreSQL and Redash.</p>
+        <p class="lang-es">Construí features de IA a escala. Diseñé flujos agénticos con LangGraph y FastAPI con pipelines de observabilidad.</p>
         <div class="tags"><span>FastAPI</span><span>LangGraph</span><span>Langfuse</span><span>PostgreSQL</span><span>Redash</span></div>
       </div>
     </div>
@@ -370,195 +366,6 @@ footer{border-top:1px solid var(--rule);padding:2rem 0;text-align:center;font-si
     setTimeout(typeChar, idx === 1 ? 600 : 50 + Math.random() * 70);
   }
   typeChar();
-})();
-
-// Three.js Background Graph
-(function(){
-  const container = document.getElementById('graph-bg');
-  if(!container || typeof THREE === 'undefined') return;
-  
-  const hero = document.getElementById('hero');
-  const w = hero.clientWidth || window.innerWidth;
-  const h = hero.clientHeight || 600;
-  
-  const scene = new THREE.Scene();
-  const camera = new THREE.PerspectiveCamera(35, w/h, 0.1, 1000);
-  camera.position.set(6, 2, 16);
-  
-  const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
-  renderer.setSize(w, h);
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
-  container.appendChild(renderer.domElement);
-  
-  // Define node groups (layers like the Agent Harness diagram)
-  const layers = [
-    { label: 'Input', y: 3.5, color: 0x7a9bcb },
-    { label: 'Reason', y: 0, color: 0x6b8fc4 },
-    { label: 'Act', y: -3.5, color: 0x5a7fb8 }
-  ];
-  
-  const nodes = [];
-  const connectionPairs = [];
-  
-  // Create hub nodes per layer
-  layers.forEach((layer, li) => {
-    const hubGeo = new THREE.SphereGeometry(0.45, 16, 16);
-    const hubMat = new THREE.MeshBasicMaterial({ color: layer.color, transparent: true, opacity: 0.9 });
-    const hub = new THREE.Mesh(hubGeo, hubMat);
-    hub.position.set(0, layer.y, 0);
-    scene.add(hub);
-    nodes.push({ mesh: hub, layer: li, hub: true, baseX: 0, baseY: layer.y, label: layer.label });
-    
-    // Child nodes around hub
-    const childCount = 3 + Math.floor(Math.random() * 2);
-    for(let i = 0; i < childCount; i++){
-      const angle = (i / childCount) * Math.PI * 2 + li * 0.5;
-      const radius = 2 + Math.random() * 0.8;
-      const size = 0.12 + Math.random() * 0.18;
-      const childGeo = new THREE.SphereGeometry(size, 8, 8);
-      const childMat = new THREE.MeshBasicMaterial({ 
-        color: layer.color, transparent: true, opacity: 0.5 + Math.random() * 0.4 
-      });
-      const child = new THREE.Mesh(childGeo, childMat);
-      const x = Math.cos(angle) * radius;
-      const z = Math.sin(angle) * radius * 0.6;
-      child.position.set(x, layer.y + (Math.random()-0.5)*0.5, z);
-      scene.add(child);
-      nodes.push({ mesh: child, layer: li, hub: false, baseX: x, baseY: child.position.y, baseZ: z });
-      connectionPairs.push([hub, child]);
-    }
-    
-    // Connecting children horizontally
-    const childrenInLayer = nodes.filter(n => n.layer === li && !n.hub);
-    for(let i = 0; i < childrenInLayer.length; i++){
-      for(let j = i+1; j < childrenInLayer.length; j++){
-        if(Math.random() < 0.5){
-          connectionPairs.push([childrenInLayer[i].mesh, childrenInLayer[j].mesh]);
-        }
-      }
-    }
-  });
-  
-  // Inter-layer connections
-  for(let i = 0; i < layers.length - 1; i++){
-    const layerNodes = nodes.filter(n => n.layer === i && !n.hub);
-    const nextNodes = nodes.filter(n => n.layer === i+1 && !n.hub);
-    layerNodes.forEach(ln => {
-      nextNodes.forEach(nn => {
-        if(Math.random() < 0.3){
-          connectionPairs.push([ln.mesh, nn.mesh]);
-        }
-      });
-    });
-    // Always connect hubs
-    connectionPairs.push([nodes.find(n => n.hub && n.layer === i).mesh, nodes.find(n => n.hub && n.layer === i+1).mesh]);
-  }
-  
-  // Create connection lines
-  const lineMat = new THREE.LineBasicMaterial({ color: 0x6b8fc4, transparent: true, opacity: 0.12 });
-  connectionPairs.forEach(([a, b]) => {
-    const points = [a.position.clone(), b.position.clone()];
-    const geo = new THREE.BufferGeometry().setFromPoints(points);
-    const line = new THREE.Line(geo, lineMat);
-    scene.add(line);
-  });
-  
-  // Glowing edge highlights (brighter lines for hub connections)
-  const highlightMat = new THREE.LineBasicMaterial({ color: 0x8aacd8, transparent: true, opacity: 0.25 });
-  layers.forEach((layer, li) => {
-    const hubPos = nodes.find(n => n.hub && n.layer === li).mesh.position;
-    layers.forEach((layer2, lj) => {
-      if(lj === li + 1){
-        const hubPos2 = nodes.find(n => n.hub && n.layer === lj).mesh.position;
-        const pts = [hubPos.clone(), hubPos2.clone()];
-        const geo = new THREE.BufferGeometry().setFromPoints(pts);
-        const line = new THREE.Line(geo, highlightMat);
-        scene.add(line);
-      }
-    });
-  });
-  
-  // Extra background particles
-  const partCount = 300;
-  const partGeo = new THREE.BufferGeometry();
-  const pos = new Float32Array(partCount * 3);
-  for(let i = 0; i < partCount * 3; i++){
-    pos[i] = (Math.random() - 0.5) * 40;
-  }
-  partGeo.setAttribute('position', new THREE.BufferAttribute(pos, 3));
-  const partMat = new THREE.PointsMaterial({
-    color: 0x8a9bb0, size: 0.03, transparent: true, opacity: 0.2
-  });
-  const particles = new THREE.Points(partGeo, partMat);
-  scene.add(particles);
-  
-  // Flowing particle stream
-  const flowCount = 50;
-  const flowGeo = new THREE.BufferGeometry();
-  const flowPos = new Float32Array(flowCount * 3);
-  const flowSpeeds = [];
-  for(let i = 0; i < flowCount; i++){
-    flowPos[i*3] = (Math.random() - 0.5) * 15;
-    flowPos[i*3+1] = 5 + Math.random() * 8;
-    flowPos[i*3+2] = (Math.random() - 0.5) * 6;
-    flowSpeeds.push(0.005 + Math.random() * 0.015);
-  }
-  flowGeo.setAttribute('position', new THREE.BufferAttribute(flowPos, 3));
-  const flowMat = new THREE.PointsMaterial({
-    color: 0x7a9bcb, size: 0.06, transparent: true, opacity: 0.35
-  });
-  const flowParticles = new THREE.Points(flowGeo, flowMat);
-  scene.add(flowParticles);
-  
-  let time = 0;
-  function animate(){
-    requestAnimationFrame(animate);
-    time += 0.008;
-    
-    // Float nodes gently
-    nodes.forEach((n, i) => {
-      const offset = n.hub ? 0.1 : 0.2;
-      n.mesh.position.x = n.baseX + Math.sin(time * 1.5 + i * 0.7) * offset;
-      n.mesh.position.y = n.baseY + Math.cos(time * 1.2 + i * 0.5) * offset * 0.5;
-      if(n.baseZ !== undefined){
-        n.mesh.position.z = n.baseZ + Math.sin(time * 1.8 + i * 0.3) * offset * 0.5;
-      }
-    });
-    
-    // Rotate flow particles downward (top to bottom)
-    const flowPosAttr = flowGeo.attributes.position;
-    const fp = flowPosAttr.array;
-    for(let i = 0; i < flowCount; i++){
-      fp[i*3+1] -= flowSpeeds[i];
-      if(fp[i*3+1] < -5){
-        fp[i*3+1] = 5 + Math.random() * 2;
-        fp[i*3] = (Math.random() - 0.5) * 15;
-        fp[i*3+2] = (Math.random() - 0.5) * 6;
-      }
-    }
-    flowPosAttr.needsUpdate = true;
-    
-    // Slow rotation
-    particles.rotation.y = time * 0.02;
-    flowParticles.rotation.y = time * 0.01;
-    
-    // Gentle camera sway
-    camera.position.x = 6 + Math.sin(time * 0.08) * 1.5;
-    camera.position.y = 1 + Math.sin(time * 0.05) * 0.5;
-    camera.lookAt(0, 0, 0);
-    
-    renderer.render(scene, camera);
-  }
-  animate();
-  
-  // Resize
-  window.addEventListener('resize', () => {
-    const nh = hero.clientHeight || 600;
-    const nw = hero.clientWidth || window.innerWidth;
-    camera.aspect = nw / nh;
-    camera.updateProjectionMatrix();
-    renderer.setSize(nw, nh);
-  });
 })();
 
 // Accordion
